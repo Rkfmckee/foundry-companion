@@ -1,11 +1,16 @@
 import CharacterSheet from "@/components/CharacterSheet";
 import NoCharacterSheetSelected from "@/components/NoCharacterSheetSelected";
 import SelectCharacterSheetDrawer from "@/components/SelectCharacterSheetDrawer";
-import { useState } from "react";
+import { SheetUuidKey } from "@/constants/SheetConstants";
+import { useEffect, useState } from "react";
 
 const Home = () => {
     const [sheetUuid, setSheetUuid] = useState("");
     const [showSelectCharacterSheetDrawer, setShowSelectCharacterSheetDrawer] = useState(false);
+
+    useEffect(() => {
+        setSheetUuid(localStorage.getItem(SheetUuidKey) ?? "");
+    }, []);
 
     return (
         <>

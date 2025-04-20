@@ -1,3 +1,4 @@
+import { SheetUuidKey } from "@/constants/SheetConstants";
 import { Field, Input } from "@chakra-ui/react";
 import { Button, ButtonGroup, CloseButton } from "@chakra-ui/react/button";
 import { Drawer } from "@chakra-ui/react/drawer";
@@ -11,18 +12,17 @@ interface SelectCharacterSheetDrawerProps {
 
 const SelectCharacterSheetDrawer = ({ open, onOpenChange, onSheetUuidSave }: SelectCharacterSheetDrawerProps) => {
     const [sheetUuid, setSheetUuid] = useState("");
-    const uuidKey = "sheet-uuid";
 
     const saveClicked = () => {
         onSheetUuidSave(sheetUuid);
-        localStorage.setItem(uuidKey, sheetUuid);
+        localStorage.setItem(SheetUuidKey, sheetUuid);
 
         onOpenChange(false);
     };
 
     const clearClicked = () => {
         setSheetUuid("");
-        localStorage.removeItem(uuidKey);
+        localStorage.removeItem(SheetUuidKey);
     };
 
     return (
