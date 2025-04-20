@@ -1,15 +1,15 @@
+import { openDrawer } from "@/slices/characterSheetSelectDrawerOpenSlice";
 import { Button, Heading } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
 
-interface NoCharacterSheetSelectedProps {
-    onSelectCharacterSheetClicked: () => void;
-}
+const NoCharacterSheetSelected = () => {
+    const dispatch = useDispatch();
 
-const NoCharacterSheetSelected = ({ onSelectCharacterSheetClicked }: NoCharacterSheetSelectedProps) => {
     return (
         <div className="no-character-sheet">
             <Heading>No Character Sheet selected</Heading>
 
-            <Button variant="subtle" onClick={onSelectCharacterSheetClicked}>
+            <Button variant="subtle" onClick={() => dispatch(openDrawer(true))}>
                 Select a Character Sheet
             </Button>
         </div>

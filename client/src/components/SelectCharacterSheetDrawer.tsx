@@ -1,25 +1,31 @@
 import { SheetUuidKey } from "@/constants/SheetConstants";
+import { IRootState } from "@/main";
+import { openDrawer } from "@/slices/characterSheetSelectDrawerOpenSlice";
 import { Field, Input } from "@chakra-ui/react";
 import { Button, ButtonGroup, CloseButton } from "@chakra-ui/react/button";
 import { Drawer } from "@chakra-ui/react/drawer";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { clear, setUuid } from "../slices/sheetUuidSlice";
 
-interface SelectCharacterSheetDrawerProps {
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-}
-
-const SelectCharacterSheetDrawer = ({ open, onOpenChange }: SelectCharacterSheetDrawerProps) => {
+const SelectCharacterSheetDrawer = () => {
     let dispatch = useDispatch();
+    const isDrawerOpen = useSelector((state: IRootState) => state.characterSheetSelectDrawerOpen.value);
     const [sheetUuid, setSheetUuid] = useState("");
 
+    useEffect(() => {
+        const currentUuid = localStorage.getItem(SheetUuidKey) ?? "";
+        dispatch(setUuid(currentUuid));
+        setSheetUuid(currentUuid);
+    }, []);
+
     const saveClicked = () => {
+        if (!sheetUuid) return;
+
         dispatch(setUuid(sheetUuid));
         localStorage.setItem(SheetUuidKey, sheetUuid);
 
-        onOpenChange(false);
+        dispatch(openDrawer(false));
     };
 
     const clearClicked = () => {
@@ -29,7 +35,7 @@ const SelectCharacterSheetDrawer = ({ open, onOpenChange }: SelectCharacterSheet
     };
 
     return (
-        <Drawer.Root open={open} onOpenChange={(details) => onOpenChange(details.open)} size="md">
+        <Drawer.Root open={isDrawerOpen} onOpenChange={(details) => dispatch(openDrawer(details.open))} size="md">
             <Drawer.Backdrop />
             <Drawer.Positioner>
                 <Drawer.Content>

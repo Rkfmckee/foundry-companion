@@ -1,10 +1,12 @@
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { IRootState } from "@/main";
+import { openDrawer } from "@/slices/characterSheetSelectDrawerOpenSlice";
 import { Button } from "@chakra-ui/react/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+    const dispatch = useDispatch();
     const sheetUuid = useSelector((state: IRootState) => state.sheetUuid.value);
     const hasSheet = sheetUuid != "";
 
@@ -16,7 +18,9 @@ const Navbar = () => {
                     <ul className="navbar-nav">
                         {hasSheet && (
                             <li className="nav-item">
-                                <Button variant="ghost">Change Character Sheet</Button>
+                                <Button variant="ghost" onClick={() => dispatch(openDrawer(true))}>
+                                    Change Character Sheet
+                                </Button>
                             </li>
                         )}
                     </ul>
