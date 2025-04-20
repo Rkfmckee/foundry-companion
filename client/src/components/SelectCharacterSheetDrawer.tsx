@@ -11,10 +11,18 @@ interface SelectCharacterSheetDrawerProps {
 
 const SelectCharacterSheetDrawer = ({ open, onOpenChange, onSheetUuidSave }: SelectCharacterSheetDrawerProps) => {
     const [sheetUuid, setSheetUuid] = useState("");
+    const uuidKey = "sheet-uuid";
 
     const saveClicked = () => {
         onSheetUuidSave(sheetUuid);
+        localStorage.setItem(uuidKey, sheetUuid);
+
         onOpenChange(false);
+    };
+
+    const clearClicked = () => {
+        setSheetUuid("");
+        localStorage.removeItem(uuidKey);
     };
 
     return (
@@ -30,6 +38,9 @@ const SelectCharacterSheetDrawer = ({ open, onOpenChange, onSheetUuidSave }: Sel
                             Select Character Sheet
                         </Drawer.Title>
                         <ButtonGroup>
+                            <Button onClick={clearClicked} variant="outline">
+                                Clear
+                            </Button>
                             <Button onClick={saveClicked}>Save</Button>
                         </ButtonGroup>
                     </Drawer.Header>
