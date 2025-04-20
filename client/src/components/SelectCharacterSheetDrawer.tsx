@@ -3,18 +3,20 @@ import { Field, Input } from "@chakra-ui/react";
 import { Button, ButtonGroup, CloseButton } from "@chakra-ui/react/button";
 import { Drawer } from "@chakra-ui/react/drawer";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { clear, setUuid } from "../slices/sheetUuidSlice";
 
 interface SelectCharacterSheetDrawerProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    onSheetUuidSave: (uuid: string) => void;
 }
 
-const SelectCharacterSheetDrawer = ({ open, onOpenChange, onSheetUuidSave }: SelectCharacterSheetDrawerProps) => {
+const SelectCharacterSheetDrawer = ({ open, onOpenChange }: SelectCharacterSheetDrawerProps) => {
+    let dispatch = useDispatch();
     const [sheetUuid, setSheetUuid] = useState("");
 
     const saveClicked = () => {
-        onSheetUuidSave(sheetUuid);
+        dispatch(setUuid(sheetUuid));
         localStorage.setItem(SheetUuidKey, sheetUuid);
 
         onOpenChange(false);
@@ -22,6 +24,7 @@ const SelectCharacterSheetDrawer = ({ open, onOpenChange, onSheetUuidSave }: Sel
 
     const clearClicked = () => {
         setSheetUuid("");
+        dispatch(clear());
         localStorage.removeItem(SheetUuidKey);
     };
 
