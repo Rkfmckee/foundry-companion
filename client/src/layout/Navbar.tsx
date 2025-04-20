@@ -10,7 +10,7 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <Button variant="ghost">Ghost</Button>
+                            <Button variant="ghost">Change Character Sheet</Button>
                         </li>
                     </ul>
                     <ColorModeButton />

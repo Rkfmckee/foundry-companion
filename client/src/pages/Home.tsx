@@ -1,5 +1,11 @@
+import CharacterSheet from "@/components/CharacterSheet";
+import SelectCharacterSheet from "@/components/SelectCharacterSheet";
+import { useState } from "react";
+
 const Home = () => {
-    return <div>Home</div>;
+    const [actorUuid, setActorUuid] = useState<string>("");
+
+    return actorUuid ? <CharacterSheet uuid={actorUuid} /> : <SelectCharacterSheet />;
 };
 
 export default Home;

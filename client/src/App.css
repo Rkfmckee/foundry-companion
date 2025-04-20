@@ -1,10 +1,19 @@
+html.light {
+    --bs-body-bg: white;
+    --bs-body-color: black;
+}
+
 html.dark {
     --bs-body-bg: black;
     --bs-body-color: white;
-    --bs-navbar-brand-color: white;
 }
 
 #root a {
     color: var(--bs-body-color);
     text-decoration: none;
+}
+
+.no-character-sheet {
+    padding-top: 5em;
+    text-align: center;
 }
