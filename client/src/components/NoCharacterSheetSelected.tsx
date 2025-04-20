@@ -6,7 +6,7 @@ const NoCharacterSheetSelected = () => {
     const dispatch = useDispatch();
 
     return (
-        <div className="no-character-sheet">
+        <div className="text-center">
             <Heading>No Character Sheet selected</Heading>
 
             <Button variant="subtle" onClick={() => dispatch(openDrawer(true))}>
