@@ -1,8 +1,9 @@
-import { ActorSheet, ActorSheetData } from "@/schemas/characterSheetSchema";
-import { getCharacterSheet } from "@/services/foundryService";
+import { ActorSheetData } from "@/schemas/characterSheetSchema";
+import { getCharacterSheet, updateCharacterSheet } from "@/services/foundryService";
 import { Input } from "@chakra-ui/react";
 import { Heading, Text } from "@chakra-ui/react/typography";
-import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Loading from "../Loading";
 
 interface CharacterSheetProps {
     uuid: string;
@@ -10,26 +11,36 @@ interface CharacterSheetProps {
 
 const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
     const [characterSheet, setCharacterSheet] = useState<ActorSheetData>();
+    const [loadingSheet, setLoadingSheet] = useState(false);
 
     useEffect(() => {
         getCharacterSheetFromFoundry();
     }, [uuid]);
 
     const getCharacterSheetFromFoundry = async () => {
+        setLoadingSheet(true);
+
         const sheet = await getCharacterSheet(uuid);
         setCharacterSheet(sheet);
+
+        setLoadingSheet(false);
     };
 
     useEffect(() => {
-        const delay = setTimeout(() => updateSheetOnApi(characterSheet), 500);
+        const delay = setTimeout(async () => await updateSheetOnApi(characterSheet), 500);
         return () => clearTimeout(delay);
     }, [characterSheet]);
 
-    const updateSheetOnApi = (sheet: ActorSheetData | undefined) => {
+    const updateSheetOnApi = async (sheet: ActorSheetData | undefined) => {
+        if (!sheet) return;
+
+        await updateCharacterSheet(uuid, sheet);
         console.log(`Name: ${sheet?.name}`);
     };
 
-    return characterSheet ? (
+    return loadingSheet ? (
+        <Loading text="Loading Character Sheet" />
+    ) : characterSheet ? (
         <>
             <Heading className="text-center">
                 Actor UUID: {uuid}

@@ -1,4 +1,4 @@
-import CharacterSheet from "@/components/CharacterSheet";
+import CharacterSheet from "@/components/characterSheet/CharacterSheet";
 import NoCharacterSheetSelected from "@/components/NoCharacterSheetSelected";
 import { IRootState } from "@/main";
 import { useSelector } from "react-redux";
