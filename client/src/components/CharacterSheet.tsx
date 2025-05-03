@@ -1,30 +1,41 @@
-import { ActorSheet } from "@/schemas/characterSheetSchema";
+import { ActorSheet, ActorSheetData } from "@/schemas/characterSheetSchema";
 import { getCharacterSheet } from "@/services/foundryService";
+import { Input } from "@chakra-ui/react";
 import { Heading, Text } from "@chakra-ui/react/typography";
-import { useEffect, useState } from "react";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 
 interface CharacterSheetProps {
     uuid: string;
 }
 
 const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
-    const [characterSheet, setCharacterSheet] = useState<ActorSheet>();
+    const [characterSheet, setCharacterSheet] = useState<ActorSheetData>();
 
     useEffect(() => {
-        const getCharacterSheetFromFoundry = async () => {
-            const sheet = await getCharacterSheet(uuid);
-            setCharacterSheet(sheet);
-        };
-
         getCharacterSheetFromFoundry();
     }, [uuid]);
 
-    return characterSheet?.data ? (
+    const getCharacterSheetFromFoundry = async () => {
+        const sheet = await getCharacterSheet(uuid);
+        setCharacterSheet(sheet);
+    };
+
+    useEffect(() => {
+        const delay = setTimeout(() => updateSheetOnApi(characterSheet), 500);
+        return () => clearTimeout(delay);
+    }, [characterSheet]);
+
+    const updateSheetOnApi = (sheet: ActorSheetData | undefined) => {
+        console.log(`Name: ${sheet?.name}`);
+    };
+
+    return characterSheet ? (
         <>
             <Heading className="text-center">
                 Actor UUID: {uuid}
                 <br />
-                Name: {characterSheet.data.name}
+                <label htmlFor="sheetName">Name:</label>
+                <Input id="sheetName" value={characterSheet.name} onChange={(event) => setCharacterSheet({ ...characterSheet, name: event.target.value })} />
             </Heading>
         </>
     ) : (
