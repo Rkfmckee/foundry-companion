@@ -1,12 +1,12 @@
-import fvttApiClient from "@/config/fvttApiClient";
-import { ActorSheet, ActorSheetData } from "@/schemas/characterSheetSchema";
+import { ActorSheetData, ActorSheetSchema } from "@/schemas/characterSheetSchema";
+import { get, put } from "./httpService";
 
 export const getCharacterSheet = async (uuid: string) => {
-    var response = await fvttApiClient.get<ActorSheet>(`/get?clientId=foundry-zFYc1iuTkSP5qIkd&uuid=${uuid}`);
-    if (response.status >= 400) return undefined;
-    return response.data.data;
+    var actorSheet = await get(`/get?clientId=foundry-zFYc1iuTkSP5qIkd&uuid=${uuid}`, ActorSheetSchema);
+    if (actorSheet) return actorSheet.data;
+    else return undefined;
 };
 
 export const updateCharacterSheet = async (uuid: string, sheet: ActorSheetData) => {
-    await fvttApiClient.put(`/update?clientId=foundry-zFYc1iuTkSP5qIkd&uuid=${uuid}`, sheet);
+    await put(`/update?clientId=foundry-zFYc1iuTkSP5qIkd&uuid=${uuid}`, sheet);
 };
