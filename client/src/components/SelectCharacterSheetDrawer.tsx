@@ -52,7 +52,9 @@ const SelectCharacterSheetDrawer = () => {
                             <Button onClick={clearClicked} variant="outline">
                                 Clear
                             </Button>
-                            <Button onClick={saveClicked}>Save</Button>
+                            <Button onClick={saveClicked} disabled={!sheetUuid}>
+                                Load Sheet
+                            </Button>
                         </ButtonGroup>
                     </Drawer.Header>
                     <Drawer.Body>
