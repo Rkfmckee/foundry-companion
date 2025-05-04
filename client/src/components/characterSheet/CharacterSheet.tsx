@@ -35,7 +35,7 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
         if (!sheet) return;
 
         await updateCharacterSheet(uuid, sheet);
-        console.log(`Name: ${sheet?.name}`);
+        console.log(sheet);
     };
 
     return loadingSheet ? (
@@ -52,7 +52,7 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
     ) : (
         <>
             <Text className="text-center">
-                Couldn't find Character sheet for UUID {uuid}
+                Couldn't find a Character Sheet for UUID '{uuid}'.
                 <br />
                 Please try a different one.
             </Text>
