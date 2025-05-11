@@ -1,11 +1,15 @@
 html.light {
     --bs-body-bg: white;
     --bs-body-color: black;
+
+    --colour-panel: #f0f0f0;
 }
 
 html.dark {
     --bs-body-bg: black;
     --bs-body-color: white;
+
+    --colour-panel: #202020;
 }
 
 /* Override bootstrap */
@@ -44,4 +48,9 @@ ul ol {
 
 .where-is-this {
     margin-top: 2em;
+}
+
+.character-sheet__panel {
+    background-color: var(--colour-panel);
+    padding: 2em;
 }
