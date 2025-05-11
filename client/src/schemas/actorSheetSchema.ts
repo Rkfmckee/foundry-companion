@@ -1,9 +1,29 @@
 import { z } from "zod";
 
+const AbilitySchema = z.object({
+    value: z.number(),
+    proficient: z.number(),
+    max: z.nullable(z.number()),
+    bonuses: z.object({
+        check: z.string(),
+        save: z.string(),
+    }),
+});
+export type Ability = z.infer<typeof AbilitySchema>;
+
 export const ActorSheetDataSchema = z.object({
     name: z.string(),
     img: z.string(),
-    system: z.object({}),
+    system: z.object({
+        abilities: z.object({
+            str: AbilitySchema,
+            dex: AbilitySchema,
+            con: AbilitySchema,
+            int: AbilitySchema,
+            wis: AbilitySchema,
+            cha: AbilitySchema,
+        }),
+    }),
     items: z.array(
         z.object({
             _id: z.string(),
