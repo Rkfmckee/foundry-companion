@@ -1,4 +1,4 @@
-import { ActorSheetData } from "@/schemas/characterSheetSchema";
+import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { Heading, Stack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
 

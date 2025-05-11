@@ -1,9 +1,10 @@
-import { ActorSheetData } from "@/schemas/characterSheetSchema";
+import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { getCharacterSheet, updateCharacterSheet } from "@/services/foundryService";
-import { Text } from "@chakra-ui/react/typography";
+import { Heading, Text } from "@chakra-ui/react/typography";
 import { useEffect, useState } from "react";
 import Loading from "../Loading";
 import CharacterSheetBasicDetails from "./CharacterSheetBasicDetails";
+import { Input } from "@chakra-ui/react/input";
 
 interface CharacterSheetProps {
     uuid: string;
