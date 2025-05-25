@@ -94,5 +94,9 @@ ul ol {
     flex-basis: 0;
     padding: 0.5em;
     text-align: center;
-    outline: 1px solid red;
+}
+
+.line {
+    border-left: 2px solid var(--bs-body-color);
+    height: 100%;
 }

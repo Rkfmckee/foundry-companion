@@ -26,15 +26,20 @@ const CharacterSheetBasicDetails = ({ sheet }: CharacterSheetBasicDetailsProps) 
                         <h5>{getClasses(sheet).map((c, i, a) => `${c.name} ${c.system.levels}${i + 1 != a.length ? ", " : ""}`)}</h5>
                     </div>
                 </HStack>
-                {/* {sheet.system} */}
+
                 <HStack className="ability-group">
                     <AbilityScoreBox name="Strength" ability={abilities.str} proficiencyBonus={proficiencyBonus} />
+                    <div className="line" />
                     <AbilityScoreBox name="Dexterity" ability={abilities.dex} proficiencyBonus={proficiencyBonus} />
+                    <div className="line" />
                     <AbilityScoreBox name="Constitution" ability={abilities.con} proficiencyBonus={proficiencyBonus} />
+                    <div className="line" />
                 </HStack>
                 <HStack className="ability-group">
                     <AbilityScoreBox name="Intelligence" ability={abilities.int} proficiencyBonus={proficiencyBonus} />
+                    <div className="line" />
                     <AbilityScoreBox name="Wisdom" ability={abilities.wis} proficiencyBonus={proficiencyBonus} />
+                    <div className="line" />
                     <AbilityScoreBox name="Charisma" ability={abilities.cha} proficiencyBonus={proficiencyBonus} />
                 </HStack>
             </Stack>
