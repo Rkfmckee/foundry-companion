@@ -21,6 +21,7 @@ export const withProficiency = (value: number, proficiencyBonus: number, profici
 };
 
 export const getClasses = (sheet: ActorSheetData) => {
+    // Get classes sorted by level descending
     return sheet.items.filter((i) => i.type == "class").sort((a, b) => ((a.system.levels ?? 0) > (b.system.levels ?? 0) ? -1 : 1));
 };
 

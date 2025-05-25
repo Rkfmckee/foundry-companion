@@ -66,6 +66,11 @@ ul ol {
     margin-bottom: 5em;
 }
 
+.crop-text {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .where-is-this {
     margin-top: 2em;
 }
@@ -76,12 +81,12 @@ ul ol {
 }
 
 .basic-details__main {
-    flex-grow: 1;
-    padding: 1em;
+    min-width: 35%;
+    padding-right: 1em;
 }
 
 .ability-group {
-    min-width: 30%;
+    flex-grow: 1;
 }
 
 .ability-box {

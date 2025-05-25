@@ -2,15 +2,13 @@ import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { Avatar, AvatarGroup, HStack, Stack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
 import AbilityScoreBox from "./AbilityScoreBox";
-import { getProficiencyBonus } from "@/helpers/dndHelpers";
+import { getClasses, getProficiencyBonus } from "@/helpers/dndHelpers";
 
 interface CharacterSheetBasicDetailsProps {
     sheet: ActorSheetData;
 }
 
 const CharacterSheetBasicDetails = ({ sheet }: CharacterSheetBasicDetailsProps) => {
-    // Get classes sorted by level descending
-    const classes = sheet.items.filter((i) => i.type == "class").sort((a, b) => ((a.system.levels ?? 0) > (b.system.levels ?? 0) ? -1 : 1));
     const abilities = sheet.system.abilities;
     const proficiencyBonus = getProficiencyBonus(sheet);
 
@@ -23,10 +21,10 @@ const CharacterSheetBasicDetails = ({ sheet }: CharacterSheetBasicDetailsProps) 
                             <Avatar.Image src={`${import.meta.env.VITE_FVTT_URL}/${sheet.img}`} />
                         </Avatar.Root>
                     </AvatarGroup>
-                    <Stack gap={0}>
+                    <div className="crop-text">
                         <h1>{sheet.name}</h1>
-                        <h5>{classes.map((c, i, a) => `${c.name} ${c.system.levels}${i + 1 != a.length ? ", " : ""}`)}</h5>
-                    </Stack>
+                        <h5>{getClasses(sheet).map((c, i, a) => `${c.name} ${c.system.levels}${i + 1 != a.length ? ", " : ""}`)}</h5>
+                    </div>
                 </HStack>
                 {/* {sheet.system} */}
                 <HStack className="ability-group">
