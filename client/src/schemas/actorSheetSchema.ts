@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+// #region Schemas
+
 const AbilitySchema = z.object({
     value: z.number(),
     proficient: z.number(),
@@ -41,3 +43,5 @@ export const ActorSheetSchema = z.object({
     data: ActorSheetDataSchema,
 });
 export type ActorSheet = z.infer<typeof ActorSheetSchema>;
+
+// #endregion
