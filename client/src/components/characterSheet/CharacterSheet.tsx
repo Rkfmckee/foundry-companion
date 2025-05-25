@@ -42,7 +42,7 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
         <Loading text="Loading Character Sheet" />
     ) : characterSheet ? (
         <>
-            <CharacterSheetBasicDetails sheet={characterSheet} />
+            <CharacterSheetBasicDetails sheet={characterSheet} setSheet={setCharacterSheet} />
             {/* <Heading className="text-center">
                 Actor UUID: {uuid}
                 <br />

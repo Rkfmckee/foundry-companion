@@ -17,6 +17,13 @@ export const ActorSheetDataSchema = z.object({
     name: z.string(),
     img: z.string(),
     system: z.object({
+        attributes: z.object({
+            hp: z.object({
+                value: z.number(),
+                max: z.number(),
+                temp: z.nullable(z.number()),
+            }),
+        }),
         abilities: z.object({
             str: AbilitySchema,
             dex: AbilitySchema,

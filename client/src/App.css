@@ -5,22 +5,26 @@ html.light {
     --bs-body-bg: white;
     --bs-body-color: black;
 
-    --colour-panel: #f0f0f0;
+    --colour-panel: #f8f8f8;
 }
 
 html.dark {
     --bs-body-bg: black;
     --bs-body-color: white;
 
-    --colour-panel: #202020;
+    --colour-panel: var(--chakra-colors-bg-panel);
 }
 
 /* Override bootstrap/base styles */
 
-h1,
-h2,
-h3 {
-    font-family: "Manrope", sans-serif;
+#root h4,
+#root h5,
+#root h6,
+#root p,
+#root small,
+div,
+span {
+    font-family: "Karla", sans-serif;
 }
 
 #root h4,
@@ -28,10 +32,15 @@ h3 {
 #root h6,
 #root p,
 #root small {
-    font-family: "Karla", sans-serif;
     margin: 0;
     margin-bottom: 0;
     padding: 0;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Manrope", sans-serif;
 }
 
 #root a {
@@ -80,9 +89,39 @@ ul ol {
     padding: 1em;
 }
 
-.basic-details__main {
+.basic-details__identity {
     min-width: 35%;
     padding-right: 1em;
+}
+
+.basic-details__stats {
+    margin-top: 0.5em;
+}
+
+.hitpoint-bar {
+    width: 50%;
+    height: 2em;
+    border: 0.2em solid grey;
+    border-radius: 0.25em;
+}
+
+.hitpoint-bar__text {
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.hitpoint-bar__text-current,
+.hitpoint-bar__text-max {
+    padding: 0 0.5em;
+    background-color: transparent;
+    width: 50%;
+}
+
+.hitpoint-bar__text-current {
+    text-align: right;
 }
 
 .ability-group {
