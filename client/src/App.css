@@ -87,6 +87,7 @@ ul ol {
 .character-sheet__panel {
     background-color: var(--colour-panel);
     padding: 1em;
+    border-radius: var(--chakra-radii-lg);
 }
 
 .basic-details__identity {
