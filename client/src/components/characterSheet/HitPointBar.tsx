@@ -2,20 +2,20 @@ import { ChangeEvent } from "react";
 
 interface HitPointBarProps {
     current: number;
-    currentChanged: (event: ChangeEvent<HTMLInputElement>) => void;
+    onCurrentChanged: (event: ChangeEvent<HTMLInputElement>) => void;
     max: number;
-    maxChanged?: () => void;
+    onMaxChanged?: () => void;
     maxEnabled?: boolean;
     backgroundStyle?: string;
 }
 
-const HitPointBar = ({ current, currentChanged, max, maxChanged, maxEnabled, backgroundStyle }: HitPointBarProps) => {
+const HitPointBar = ({ current, onCurrentChanged, max, onMaxChanged, maxEnabled, backgroundStyle }: HitPointBarProps) => {
     return (
         <div className="hitpoint-bar" style={{ background: backgroundStyle }}>
             <div className="hitpoint-bar__text">
-                <input className="hitpoint-bar__text-current" type="number" value={current} onChange={currentChanged} />
+                <input className="hitpoint-bar__text-current" type="number" value={current} onChange={onCurrentChanged} />
                 <span>/</span>
-                <input className="hitpoint-bar__text-max" type="number" value={max} onChange={maxChanged} disabled={!maxEnabled} />
+                <input className="hitpoint-bar__text-max" type="number" value={max} onChange={onMaxChanged} disabled={!maxEnabled} />
             </div>
         </div>
     );

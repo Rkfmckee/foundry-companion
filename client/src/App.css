@@ -153,7 +153,8 @@ input[type="number"] {
 }
 
 .basic-details__stats-hp-modify {
-    width: 60%;
+    width: 100%;
+    text-align: center;
 }
 
 .hitpoint-modify {
@@ -168,10 +169,6 @@ input[type="number"] {
 .hitpoint-remove {
     color: var(--bs-body-color);
     background-color: red;
-}
-
-.basic-details__stats-hp-dice {
-    width: 40%;
 }
 
 .ability-group {

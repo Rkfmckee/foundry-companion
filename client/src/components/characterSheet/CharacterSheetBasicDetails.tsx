@@ -1,10 +1,11 @@
 import { getClasses, getProficiencyBonus } from "@/helpers/dndHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
-import { Avatar, AvatarGroup, HStack, IconButton, Stack, VStack } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, HStack, IconButton, Stack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import AbilityScoreBox from "./AbilityScoreBox";
 import HitPointBar from "./HitPointBar";
+import { withinRange } from "@/helpers/numberHelpers";
 
 interface CharacterSheetBasicDetailsProps {
     sheet: ActorSheetData;
@@ -12,19 +13,26 @@ interface CharacterSheetBasicDetailsProps {
 }
 
 const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDetailsProps) => {
+    const [modifyHp, setModifyHp] = useState("");
+
     const hitPoints = sheet.system.attributes.hp;
     const abilities = sheet.system.abilities;
 
     const hitPointsPercentage = (hitPoints.value / hitPoints.max) * 100;
     const proficiencyBonus = getProficiencyBonus(sheet);
 
-    const setHitPoints = (event: ChangeEvent<HTMLInputElement>, type: "hp" | "temp") => {
+    const hitPointsChanged = (event: ChangeEvent<HTMLInputElement>, type: "hp" | "temp") => {
         let current = Number(event.target.value) ?? 0;
-        if (current > hitPoints.max) current = hitPoints.max;
-        if (current < 0) current = 0;
 
-        const currentHp = type == "hp" ? current : hitPoints.value;
-        const currentTemp = type == "temp" ? current : hitPoints.temp;
+        const hpValue = type == "hp" ? current : hitPoints.value;
+        const tempValue = type == "temp" ? current : hitPoints.temp ?? 0;
+
+        hitPointValuesChanged(hpValue, tempValue);
+    };
+
+    const hitPointValuesChanged = (hpValue?: number, tempValue?: number) => {
+        if (!hpValue) hpValue = hitPoints.value;
+        if (!tempValue) tempValue = hitPoints.temp ?? 0;
 
         setSheet({
             ...sheet,
@@ -32,10 +40,30 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                 ...sheet.system,
                 attributes: {
                     ...sheet.system.attributes,
-                    hp: { ...sheet.system.attributes.hp, value: currentHp, temp: currentTemp },
+                    hp: { ...sheet.system.attributes.hp, value: withinRange(hpValue, 0, hitPoints.max), temp: withinRange(tempValue, 0, hitPoints.max) },
                 },
             },
         });
+    };
+
+    const addHpClicked = () => {
+        let current = Number(modifyHp);
+        if (!current) return;
+
+        hitPointValuesChanged(hitPoints.value + current, undefined);
+        setModifyHp("");
+    };
+
+    const subtractHpClicked = () => {
+        let current = Number(modifyHp);
+        if (!current) return;
+
+        const tempHp = hitPoints.temp ?? 0;
+        let valueAfterTemp = current - tempHp;
+        if (valueAfterTemp < 0) valueAfterTemp = 0;
+
+        hitPointValuesChanged(hitPoints.value - valueAfterTemp, tempHp - current);
+        setModifyHp("");
     };
 
     return (
@@ -62,32 +90,28 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                                             <small>Hit Points</small>
                                             <HitPointBar
                                                 current={hitPoints.value}
-                                                currentChanged={(event) => setHitPoints(event, "hp")}
+                                                onCurrentChanged={(event) => hitPointsChanged(event, "hp")}
                                                 max={hitPoints.max}
                                                 backgroundStyle={`linear-gradient(90deg, green ${hitPointsPercentage}%, grey ${hitPointsPercentage}%)`}
                                             />
                                         </div>
                                         <div className="basic-details__stats-hp-temp">
                                             <small>Temp</small>
-                                            <input className="hitpoint-temp" type="number" value={hitPoints.temp ?? 0} onChange={(event) => setHitPoints(event, "temp")} />
+                                            <input className="hitpoint-temp" type="number" value={hitPoints.temp ?? 0} onChange={(event) => hitPointsChanged(event, "temp")} />
                                         </div>
                                     </HStack>
                                     <HStack className="mt-2">
                                         <div className="basic-details__stats-hp-modify">
                                             <small>Modify Hit Points</small>
                                             <HStack>
-                                                <IconButton className="hitpoint-remove" rounded="full" size="sm">
+                                                <IconButton className="hitpoint-remove" rounded="full" size="sm" onClick={subtractHpClicked}>
                                                     <i className="fa-solid fa-minus"></i>
                                                 </IconButton>
-                                                <input className="hitpoint-modify w-100" type="number" value={hitPoints.temp ?? 0} onChange={(event) => setHitPoints(event, "temp")} />
-                                                <IconButton className="hitpoint-add" rounded="full" size="sm">
+                                                <input className="hitpoint-modify w-100" type="number" value={modifyHp} onChange={(event) => setModifyHp(event.target.value)} />
+                                                <IconButton className="hitpoint-add" rounded="full" size="sm" onClick={addHpClicked}>
                                                     <i className="fa-solid fa-plus"></i>
                                                 </IconButton>
                                             </HStack>
-                                        </div>
-                                        <div className="basic-details__stats-hp-dice">
-                                            <small>Hit Dice</small>
-                                            <HitPointBar current={hitPoints.value} currentChanged={(event) => setHitPoints(event, "hp")} max={hitPoints.max} backgroundStyle="darkred" />
                                         </div>
                                     </HStack>
                                 </div>
