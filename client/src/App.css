@@ -69,6 +69,16 @@ ul ol {
     margin-left: 15px;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Remove arrows from number inputs */
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 /* Custom styles */
 
 .navbar {
@@ -99,8 +109,17 @@ ul ol {
     margin-top: 0.5em;
 }
 
-.hitpoint-bar {
-    width: 50%;
+/* .basic-details__stats-hp {
+    min-width: 50%;
+    display: flex;
+    flex-direction: row;
+} */
+
+.basic-details__stats-hp-main {
+}
+
+.hitpoint-bar,
+.hitpoint-temp {
     height: 2em;
     border: 0.2em solid grey;
     border-radius: 0.25em;
@@ -119,10 +138,21 @@ ul ol {
     padding: 0 0.5em;
     background-color: transparent;
     width: 50%;
+    appearance: none;
 }
 
 .hitpoint-bar__text-current {
     text-align: right;
+}
+
+.basic-details__stats-hp-temp {
+    margin-left: 0.5em;
+}
+
+.hitpoint-temp {
+    width: 100%;
+    background-color: royalblue;
+    text-align: center;
 }
 
 .ability-group {

@@ -17,10 +17,13 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
     const hitPointsPercentage = (hitPoints.value / hitPoints.max) * 100;
     const proficiencyBonus = getProficiencyBonus(sheet);
 
-    const setHitPoints = (event: ChangeEvent<HTMLInputElement>) => {
+    const setHitPoints = (event: ChangeEvent<HTMLInputElement>, type: "hp" | "temp") => {
         let current = Number(event.target.value) ?? 0;
         if (current > hitPoints.max) current = hitPoints.max;
-        else if (current < 0) current = 0;
+        if (current < 0) current = 0;
+
+        const currentHp = type == "hp" ? current : hitPoints.value;
+        const currentTemp = type == "temp" ? current : hitPoints.temp;
 
         setSheet({
             ...sheet,
@@ -28,7 +31,7 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                 ...sheet.system,
                 attributes: {
                     ...sheet.system.attributes,
-                    hp: { ...sheet.system.attributes.hp, value: current },
+                    hp: { ...sheet.system.attributes.hp, value: currentHp, temp: currentTemp },
                 },
             },
         });
@@ -50,12 +53,26 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                         </div>
                     </HStack>
                     <div className="basic-details__stats">
-                        <div className="hitpoint-bar" style={{ background: `linear-gradient(90deg, green ${hitPointsPercentage}%, grey ${hitPointsPercentage}%)` }}>
-                            <div className="hitpoint-bar__text">
-                                <input className="hitpoint-bar__text-current" type="number" value={hitPoints.value} onChange={setHitPoints} />
-                                <span>/</span>
-                                <input className="hitpoint-bar__text-max" value={hitPoints.max} disabled />
+                        <div className="row">
+                            <div className="col-md-6 basic-details__stats-hp">
+                                <div className="row">
+                                    <div className="basic-details__stats-hp-main col p-0">
+                                        <small>Hit Points</small>
+                                        <div className="hitpoint-bar" style={{ background: `linear-gradient(90deg, green ${hitPointsPercentage}%, grey ${hitPointsPercentage}%)` }}>
+                                            <div className="hitpoint-bar__text">
+                                                <input className="hitpoint-bar__text-current" type="number" value={hitPoints.value} onChange={(event) => setHitPoints(event, "hp")} />
+                                                <span>/</span>
+                                                <input className="hitpoint-bar__text-max" type="number" value={hitPoints.max} disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="basic-details__stats-hp-temp col-3 p-0">
+                                        <small>Temp</small>
+                                        <input className="hitpoint-temp" type="number" value={hitPoints.temp ?? 0} onChange={(event) => setHitPoints(event, "temp")} />
+                                    </div>
+                                </div>
                             </div>
+                            <div className="col-md-6 basic-details__stats-misc"></div>
                         </div>
                     </div>
                 </div>
