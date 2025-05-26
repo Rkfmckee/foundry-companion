@@ -1,9 +1,10 @@
 import { getClasses, getProficiencyBonus } from "@/helpers/dndHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
-import { Avatar, AvatarGroup, HStack, Stack } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, HStack, IconButton, Stack, VStack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
 import { ChangeEvent } from "react";
 import AbilityScoreBox from "./AbilityScoreBox";
+import HitPointBar from "./HitPointBar";
 
 interface CharacterSheetBasicDetailsProps {
     sheet: ActorSheetData;
@@ -53,27 +54,46 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                         </div>
                     </HStack>
                     <div className="basic-details__stats">
-                        <div className="row">
+                        <Stack direction={{ base: "column", md: "row" }}>
                             <div className="col-md-6 basic-details__stats-hp">
-                                <div className="row">
-                                    <div className="basic-details__stats-hp-main col p-0">
-                                        <small>Hit Points</small>
-                                        <div className="hitpoint-bar" style={{ background: `linear-gradient(90deg, green ${hitPointsPercentage}%, grey ${hitPointsPercentage}%)` }}>
-                                            <div className="hitpoint-bar__text">
-                                                <input className="hitpoint-bar__text-current" type="number" value={hitPoints.value} onChange={(event) => setHitPoints(event, "hp")} />
-                                                <span>/</span>
-                                                <input className="hitpoint-bar__text-max" type="number" value={hitPoints.max} disabled />
-                                            </div>
+                                <div>
+                                    <HStack>
+                                        <div className="basic-details__stats-hp-main">
+                                            <small>Hit Points</small>
+                                            <HitPointBar
+                                                current={hitPoints.value}
+                                                currentChanged={(event) => setHitPoints(event, "hp")}
+                                                max={hitPoints.max}
+                                                backgroundStyle={`linear-gradient(90deg, green ${hitPointsPercentage}%, grey ${hitPointsPercentage}%)`}
+                                            />
                                         </div>
-                                    </div>
-                                    <div className="basic-details__stats-hp-temp col-3 p-0">
-                                        <small>Temp</small>
-                                        <input className="hitpoint-temp" type="number" value={hitPoints.temp ?? 0} onChange={(event) => setHitPoints(event, "temp")} />
-                                    </div>
+                                        <div className="basic-details__stats-hp-temp">
+                                            <small>Temp</small>
+                                            <input className="hitpoint-temp" type="number" value={hitPoints.temp ?? 0} onChange={(event) => setHitPoints(event, "temp")} />
+                                        </div>
+                                    </HStack>
+                                    <HStack className="mt-2">
+                                        <div className="basic-details__stats-hp-modify">
+                                            <small>Modify Hit Points</small>
+                                            <HStack>
+                                                <IconButton className="hitpoint-remove" rounded="full" size="sm">
+                                                    <i className="fa-solid fa-minus"></i>
+                                                </IconButton>
+                                                <input className="hitpoint-modify w-100" type="number" value={hitPoints.temp ?? 0} onChange={(event) => setHitPoints(event, "temp")} />
+                                                <IconButton className="hitpoint-add" rounded="full" size="sm">
+                                                    <i className="fa-solid fa-plus"></i>
+                                                </IconButton>
+                                            </HStack>
+                                        </div>
+                                        <div className="basic-details__stats-hp-dice">
+                                            <small>Hit Dice</small>
+                                            <HitPointBar current={hitPoints.value} currentChanged={(event) => setHitPoints(event, "hp")} max={hitPoints.max} backgroundStyle="darkred" />
+                                        </div>
+                                    </HStack>
                                 </div>
                             </div>
-                            <div className="col-md-6 basic-details__stats-misc"></div>
-                        </div>
+                            <div className="col-md-6 basic-details__stats-misc">Test</div>
+                        </Stack>
                     </div>
                 </div>
 
