@@ -171,13 +171,26 @@ input[type="number"] {
     background-color: red;
 }
 
-.modifier-with-label {
+.modifier-with-label,
+.icon-button-with-label {
     margin: 0 0.5em;
     text-align: center;
 
     .modifier-with-label__mod {
         padding: 0;
         margin: 0;
+    }
+
+    .icon-button-with-label__icon {
+        font-size: 25px;
+    }
+}
+
+.icon-with-label {
+    margin: 0 0.25em;
+
+    i {
+        margin-right: 0.25em;
     }
 }
 

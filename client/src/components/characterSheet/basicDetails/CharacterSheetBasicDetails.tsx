@@ -1,12 +1,14 @@
 import { getArmourClass, getClasses, getInitiativeBonus, getProficiencyBonus, modifierDisplay } from "@/helpers/dndHelpers";
+import { withinRange } from "@/helpers/numberHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { Avatar, AvatarGroup, HStack, IconButton, Stack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
 import { ChangeEvent, useState } from "react";
 import AbilityScoreBox from "./AbilityScoreBox";
 import HitPointBar from "./HitPointBar";
-import { withinRange } from "@/helpers/numberHelpers";
+import IconButtonWithLabel from "./IconButtonWithLabel";
 import ModifierWithLabel from "./ModifierWithLabel";
+import SpeedDisplay from "./SpeedDisplay";
 
 interface CharacterSheetBasicDetailsProps {
     sheet: ActorSheetData;
@@ -18,6 +20,7 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
 
     const hitPoints = sheet.system.attributes.hp;
     const abilities = sheet.system.abilities;
+    const movement = sheet.system.attributes.movement;
 
     const hitPointsPercentage = (hitPoints.value / hitPoints.max) * 100;
     const proficiencyBonus = getProficiencyBonus(sheet);
@@ -122,6 +125,33 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                                     <ModifierWithLabel modifier={getArmourClass(sheet).toString()} label="Armour Class" />
                                     <ModifierWithLabel modifier={getInitiativeBonus(sheet)} label="Initiative" />
                                     <ModifierWithLabel modifier={modifierDisplay(getProficiencyBonus(sheet))} label="Proficiency" />
+                                </HStack>
+                                <HStack className="justify-content-center">
+                                    <IconButtonWithLabel
+                                        icon="fa-solid fa-circle-xmark"
+                                        iconClicked="fa-solid fa-dice-d20"
+                                        label="Not Inspired"
+                                        labelClicked="Inspired"
+                                        clicked={sheet.system.attributes.inspiration}
+                                        onClick={() =>
+                                            setSheet({
+                                                ...sheet,
+                                                system: {
+                                                    ...sheet.system,
+                                                    attributes: {
+                                                        ...sheet.system.attributes,
+                                                        inspiration: !sheet.system.attributes.inspiration,
+                                                    },
+                                                },
+                                            })
+                                        }
+                                    />
+
+                                    <SpeedDisplay icon="fa-person-running" value={movement.walk} />
+                                    <SpeedDisplay icon="fa-plane" value={movement.fly} />
+                                    <SpeedDisplay icon="fa-hand" value={movement.climb} />
+                                    <SpeedDisplay icon="fa-person-swimming" value={movement.swim} />
+                                    <SpeedDisplay icon="fa-person-digging" value={movement.burrow} />
                                 </HStack>
                             </div>
                         </Stack>

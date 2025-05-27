@@ -3,7 +3,7 @@ import { getCharacterSheet, updateCharacterSheet } from "@/services/foundryServi
 import { Text } from "@chakra-ui/react/typography";
 import { useEffect, useState } from "react";
 import Loading from "../Loading";
-import CharacterSheetBasicDetails from "./CharacterSheetBasicDetails";
+import CharacterSheetBasicDetails from "./basicDetails/CharacterSheetBasicDetails";
 
 interface CharacterSheetProps {
     uuid: string;

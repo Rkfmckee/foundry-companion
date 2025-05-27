@@ -31,6 +31,16 @@ export const ActorSheetDataSchema = z.object({
                 ability: z.string(),
                 bonus: z.string(),
             }),
+            movement: z.object({
+                burrow: z.number(),
+                climb: z.number(),
+                fly: z.number(),
+                swim: z.number(),
+                walk: z.number(),
+                units: z.string(),
+                hover: z.boolean(),
+            }),
+            inspiration: z.boolean(),
         }),
         abilities: z.object({
             str: AbilitySchema,
