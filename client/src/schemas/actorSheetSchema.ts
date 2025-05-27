@@ -23,6 +23,14 @@ export const ActorSheetDataSchema = z.object({
                 max: z.number(),
                 temp: z.nullable(z.number()),
             }),
+            ac: z.object({
+                calc: z.string(),
+                flat: z.number(),
+            }),
+            init: z.object({
+                ability: z.string(),
+                bonus: z.string(),
+            }),
         }),
         abilities: z.object({
             str: AbilitySchema,

@@ -1,4 +1,4 @@
-import { getClasses, getProficiencyBonus } from "@/helpers/dndHelpers";
+import { getArmourClass, getClasses, getInitiativeBonus, getProficiencyBonus, modifierDisplay } from "@/helpers/dndHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { Avatar, AvatarGroup, HStack, IconButton, Stack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
@@ -6,6 +6,7 @@ import { ChangeEvent, useState } from "react";
 import AbilityScoreBox from "./AbilityScoreBox";
 import HitPointBar from "./HitPointBar";
 import { withinRange } from "@/helpers/numberHelpers";
+import ModifierWithLabel from "./ModifierWithLabel";
 
 interface CharacterSheetBasicDetailsProps {
     sheet: ActorSheetData;
@@ -105,18 +106,24 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                                             <small>Modify Hit Points</small>
                                             <HStack>
                                                 <IconButton className="hitpoint-remove" rounded="full" size="sm" onClick={subtractHpClicked}>
-                                                    <i className="fa-solid fa-minus"></i>
+                                                    <i className="fa-solid fa-minus" />
                                                 </IconButton>
                                                 <input className="hitpoint-modify w-100" type="number" value={modifyHp} onChange={(event) => setModifyHp(event.target.value)} />
                                                 <IconButton className="hitpoint-add" rounded="full" size="sm" onClick={addHpClicked}>
-                                                    <i className="fa-solid fa-plus"></i>
+                                                    <i className="fa-solid fa-plus" />
                                                 </IconButton>
                                             </HStack>
                                         </div>
                                     </HStack>
                                 </div>
                             </div>
-                            <div className="col-md-6 basic-details__stats-misc">Test</div>
+                            <div className="col-md-6 basic-details__stats-misc">
+                                <HStack className="justify-content-center">
+                                    <ModifierWithLabel modifier={getArmourClass(sheet).toString()} label="Armour Class" />
+                                    <ModifierWithLabel modifier={getInitiativeBonus(sheet)} label="Initiative" />
+                                    <ModifierWithLabel modifier={modifierDisplay(getProficiencyBonus(sheet))} label="Proficiency" />
+                                </HStack>
+                            </div>
                         </Stack>
                     </div>
                 </div>
