@@ -8,7 +8,6 @@ import AbilityScoreBox from "./AbilityScoreBox";
 import HitPointBar from "./HitPointBar";
 import IconButtonWithLabel from "./IconButtonWithLabel";
 import ModifierWithLabel from "./ModifierWithLabel";
-import SpeedDisplay from "./SpeedDisplay";
 
 interface CharacterSheetBasicDetailsProps {
     sheet: ActorSheetData;
@@ -20,7 +19,6 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
 
     const hitPoints = sheet.system.attributes.hp;
     const abilities = sheet.system.abilities;
-    const movement = sheet.system.attributes.movement;
 
     const hitPointsPercentage = (hitPoints.value / hitPoints.max) * 100;
     const proficiencyBonus = getProficiencyBonus(sheet);
@@ -104,57 +102,51 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                                             <input className="hitpoint-temp" type="number" value={hitPoints.temp ?? 0} onChange={(event) => hitPointsChanged(event, "temp")} />
                                         </div>
                                     </HStack>
-                                    <HStack className="mt-2">
-                                        <div className="basic-details__stats-hp-modify">
-                                            <small>Modify Hit Points</small>
-                                            <HStack>
-                                                <IconButton className="hitpoint-remove" rounded="full" size="sm" onClick={subtractHpClicked}>
-                                                    <i className="fa-solid fa-minus" />
-                                                </IconButton>
-                                                <input className="hitpoint-modify w-100" type="number" value={modifyHp} onChange={(event) => setModifyHp(event.target.value)} />
-                                                <IconButton className="hitpoint-add" rounded="full" size="sm" onClick={addHpClicked}>
-                                                    <i className="fa-solid fa-plus" />
-                                                </IconButton>
-                                            </HStack>
-                                        </div>
-                                    </HStack>
                                 </div>
                             </div>
                             <div className="col-md-6 basic-details__stats-misc">
-                                <HStack className="justify-content-center">
-                                    <ModifierWithLabel modifier={getArmourClass(sheet).toString()} label="Armour Class" />
-                                    <ModifierWithLabel modifier={getInitiativeBonus(sheet)} label="Initiative" />
-                                    <ModifierWithLabel modifier={modifierDisplay(getProficiencyBonus(sheet))} label="Proficiency" />
-                                </HStack>
-                                <HStack className="justify-content-center">
-                                    <IconButtonWithLabel
-                                        icon="fa-solid fa-circle-xmark"
-                                        iconClicked="fa-solid fa-dice-d20"
-                                        label="Not Inspired"
-                                        labelClicked="Inspired"
-                                        clicked={sheet.system.attributes.inspiration}
-                                        onClick={() =>
-                                            setSheet({
-                                                ...sheet,
-                                                system: {
-                                                    ...sheet.system,
-                                                    attributes: {
-                                                        ...sheet.system.attributes,
-                                                        inspiration: !sheet.system.attributes.inspiration,
-                                                    },
-                                                },
-                                            })
-                                        }
-                                    />
-
-                                    <SpeedDisplay icon="fa-person-running" value={movement.walk} />
-                                    <SpeedDisplay icon="fa-plane" value={movement.fly} />
-                                    <SpeedDisplay icon="fa-hand" value={movement.climb} />
-                                    <SpeedDisplay icon="fa-person-swimming" value={movement.swim} />
-                                    <SpeedDisplay icon="fa-person-digging" value={movement.burrow} />
+                                <HStack className="mx-3">
+                                    <div className="basic-details__stats-hp-modify">
+                                        <small>Modify Hit Points</small>
+                                        <HStack>
+                                            <IconButton className="hitpoint-remove" rounded="full" size="sm" onClick={subtractHpClicked}>
+                                                <i className="fa-solid fa-minus" />
+                                            </IconButton>
+                                            <input className="hitpoint-modify w-100" type="number" value={modifyHp} onChange={(event) => setModifyHp(event.target.value)} />
+                                            <IconButton className="hitpoint-add" rounded="full" size="sm" onClick={addHpClicked}>
+                                                <i className="fa-solid fa-plus" />
+                                            </IconButton>
+                                        </HStack>
+                                    </div>
                                 </HStack>
                             </div>
                         </Stack>
+                    </div>
+                    <div className="basic-details__stats">
+                        <HStack gap="1em">
+                            <IconButtonWithLabel
+                                icon="fa-solid fa-circle-xmark"
+                                iconClicked="fa-solid fa-dice-d20"
+                                label="Not Inspired"
+                                labelClicked="Inspired"
+                                clicked={sheet.system.attributes.inspiration}
+                                onClick={() =>
+                                    setSheet({
+                                        ...sheet,
+                                        system: {
+                                            ...sheet.system,
+                                            attributes: {
+                                                ...sheet.system.attributes,
+                                                inspiration: !sheet.system.attributes.inspiration,
+                                            },
+                                        },
+                                    })
+                                }
+                            />
+                            <ModifierWithLabel modifier={modifierDisplay(getProficiencyBonus(sheet))} label="Proficiency" />
+                            <ModifierWithLabel modifier={getArmourClass(sheet).toString()} label="Armour Class" />
+                            <ModifierWithLabel modifier={getInitiativeBonus(sheet)} label="Initiative" />
+                        </HStack>
                     </div>
                 </div>
 

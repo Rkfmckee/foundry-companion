@@ -6,7 +6,7 @@ interface ModifierWithLabelProps {
 const ModifierWithLabel = ({ modifier, label }: ModifierWithLabelProps) => {
     return (
         <div className="modifier-with-label">
-            <h1 className="modifier-with-label__mod">{modifier}</h1>
+            <h4 className="modifier-with-label__mod">{modifier}</h4>
             <small>{label}</small>
         </div>
     );
