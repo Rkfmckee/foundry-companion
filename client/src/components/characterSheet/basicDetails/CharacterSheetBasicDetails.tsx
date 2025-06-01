@@ -1,13 +1,14 @@
 import { getArmourClass, getClasses, getInitiativeBonus, getProficiencyBonus, modifierDisplay } from "@/helpers/dndHelpers";
 import { withinRange } from "@/helpers/numberHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
-import { Avatar, AvatarGroup, HStack, IconButton, Stack } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, HStack, IconButton, Separator, Stack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
 import { ChangeEvent, useState } from "react";
 import AbilityScoreBox from "./AbilityScoreBox";
 import HitPointBar from "./HitPointBar";
 import IconButtonWithLabel from "./IconButtonWithLabel";
 import ModifierWithLabel from "./ModifierWithLabel";
+import AbilitySeparator from "./AbilitySeparator";
 
 interface CharacterSheetBasicDetailsProps {
     sheet: ActorSheetData;
@@ -123,7 +124,7 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                         </Stack>
                     </div>
                     <div className="basic-details__stats">
-                        <HStack gap="1em">
+                        <HStack className="basic-details__stats-stats" gap="1em">
                             <IconButtonWithLabel
                                 icon="fa-solid fa-circle-xmark"
                                 iconClicked="fa-solid fa-dice-d20"
@@ -152,17 +153,17 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
 
                 <HStack className="ability-group">
                     <AbilityScoreBox name="Strength" ability={abilities.str} proficiencyBonus={proficiencyBonus} />
-                    <div className="line" />
+                    <AbilitySeparator />
                     <AbilityScoreBox name="Dexterity" ability={abilities.dex} proficiencyBonus={proficiencyBonus} />
-                    <div className="line" />
+                    <AbilitySeparator />
                     <AbilityScoreBox name="Constitution" ability={abilities.con} proficiencyBonus={proficiencyBonus} />
-                    <div className="line" />
+                    <AbilitySeparator />
                 </HStack>
                 <HStack className="ability-group">
                     <AbilityScoreBox name="Intelligence" ability={abilities.int} proficiencyBonus={proficiencyBonus} />
-                    <div className="line" />
+                    <AbilitySeparator />
                     <AbilityScoreBox name="Wisdom" ability={abilities.wis} proficiencyBonus={proficiencyBonus} />
-                    <div className="line" />
+                    <AbilitySeparator />
                     <AbilityScoreBox name="Charisma" ability={abilities.cha} proficiencyBonus={proficiencyBonus} />
                 </HStack>
             </Stack>

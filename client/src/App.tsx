@@ -1,8 +1,8 @@
+import "bootstrap/dist/css/bootstrap.css";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./layout/Layout";
 import Home from "./pages/Home";
-import "./styles.scss";
 
 function App() {
     return (

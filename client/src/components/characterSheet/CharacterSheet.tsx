@@ -43,12 +43,6 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
     ) : characterSheet ? (
         <>
             <CharacterSheetBasicDetails sheet={characterSheet} setSheet={setCharacterSheet} />
-            {/* <Heading className="text-center">
-                Actor UUID: {uuid}
-                <br />
-                <label htmlFor="sheetName">Name:</label>
-                <Input id="sheetName" value={characterSheet.name} onChange={(event) => setCharacterSheet({ ...characterSheet, name: event.target.value })} />
-            </Heading> */}
         </>
     ) : (
         <>

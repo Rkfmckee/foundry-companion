@@ -109,13 +109,10 @@ input[type="number"] {
     margin-top: 0.5em;
 }
 
-/* .basic-details__stats-hp {
-    min-width: 50%;
-    display: flex;
-    flex-direction: row;
-} */
-
-.basic-details__stats-hp-main {
+.basic-details__stats-stats {
+    @media (max-width: 640px) {
+        justify-content: center;
+    }
 }
 
 .hitpoint-bar,
