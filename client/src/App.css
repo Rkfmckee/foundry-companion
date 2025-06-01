@@ -1,14 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap");
+
 html.light {
     --bs-body-bg: white;
     --bs-body-color: black;
+
+    --colour-panel: #f8f8f8;
 }
 
 html.dark {
     --bs-body-bg: black;
     --bs-body-color: white;
+
+    --colour-panel: var(--chakra-colors-bg-panel);
 }
 
-/* Override bootstrap */
+/* Override bootstrap/base styles */
+
+#root h4,
+#root h5,
+#root h6,
+#root p,
+#root small,
+div,
+span {
+    font-family: "Karla", sans-serif;
+}
+
+#root h4,
+#root h5,
+#root h6,
+#root p,
+#root small {
+    margin: 0;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Manrope", sans-serif;
+}
 
 #root a {
     color: var(--bs-body-color);
@@ -36,12 +69,139 @@ ul ol {
     margin-left: 15px;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Remove arrows from number inputs */
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 /* Custom styles */
 
 .navbar {
     margin-bottom: 5em;
 }
 
+.crop-text {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .where-is-this {
     margin-top: 2em;
+}
+
+.character-sheet__panel {
+    background-color: var(--colour-panel);
+    padding: 1em;
+    border-radius: var(--chakra-radii-lg);
+}
+
+.basic-details__identity {
+    min-width: 35%;
+    padding-right: 1em;
+}
+
+.basic-details__stats {
+    margin-top: 0.5em;
+}
+
+/* .basic-details__stats-hp {
+    min-width: 50%;
+    display: flex;
+    flex-direction: row;
+} */
+
+.basic-details__stats-hp-main {
+}
+
+.hitpoint-bar,
+.hitpoint-temp,
+.hitpoint-modify {
+    height: 2em;
+    border: 0.2em solid grey;
+    border-radius: 0.25em;
+}
+
+.hitpoint-bar__text {
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.hitpoint-bar__text-current,
+.hitpoint-bar__text-max {
+    padding: 0 0.5em;
+    background-color: transparent;
+    width: 50%;
+    appearance: none;
+}
+
+.hitpoint-bar__text-current {
+    text-align: right;
+}
+
+.hitpoint-temp {
+    width: 100%;
+    background-color: royalblue;
+    text-align: center;
+}
+
+.basic-details__stats-hp-modify {
+    width: 100%;
+    text-align: center;
+}
+
+.hitpoint-modify {
+    text-align: center;
+}
+
+.hitpoint-add {
+    color: var(--bs-body-color);
+    background-color: green;
+}
+
+.hitpoint-remove {
+    color: var(--bs-body-color);
+    background-color: red;
+}
+
+.modifier-with-label {
+    text-align: center;
+
+    .modifier-with-label__mod {
+        padding: 0;
+        margin: 0;
+        font-size: 25px;
+        height: 1.1em;
+    }
+}
+
+.icon-with-label {
+    margin: 0 0.25em;
+
+    i {
+        margin-right: 0.25em;
+    }
+}
+
+.ability-group {
+    flex-grow: 1;
+}
+
+.ability-box {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 0.5em;
+    text-align: center;
+}
+
+.line {
+    border-left: 2px solid var(--bs-body-color);
+    height: 100%;
 }

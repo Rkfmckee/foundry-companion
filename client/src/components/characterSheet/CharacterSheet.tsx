@@ -1,9 +1,9 @@
-import { ActorSheetData } from "@/schemas/characterSheetSchema";
+import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { getCharacterSheet, updateCharacterSheet } from "@/services/foundryService";
-import { Input } from "@chakra-ui/react";
-import { Heading, Text } from "@chakra-ui/react/typography";
+import { Text } from "@chakra-ui/react/typography";
 import { useEffect, useState } from "react";
 import Loading from "../Loading";
+import CharacterSheetBasicDetails from "./basicDetails/CharacterSheetBasicDetails";
 
 interface CharacterSheetProps {
     uuid: string;
@@ -42,12 +42,13 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
         <Loading text="Loading Character Sheet" />
     ) : characterSheet ? (
         <>
-            <Heading className="text-center">
+            <CharacterSheetBasicDetails sheet={characterSheet} setSheet={setCharacterSheet} />
+            {/* <Heading className="text-center">
                 Actor UUID: {uuid}
                 <br />
                 <label htmlFor="sheetName">Name:</label>
                 <Input id="sheetName" value={characterSheet.name} onChange={(event) => setCharacterSheet({ ...characterSheet, name: event.target.value })} />
-            </Heading>
+            </Heading> */}
         </>
     ) : (
         <>
