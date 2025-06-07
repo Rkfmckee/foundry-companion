@@ -94,11 +94,15 @@ input[type="number"] {
     margin-top: 2em;
 }
 
+/* Character sheet */
+
 .character-sheet__panel {
     background-color: var(--colour-panel);
     padding: 1em;
     border-radius: var(--chakra-radii-lg);
 }
+
+/* Basic details */
 
 .basic-details__identity {
     min-width: 35%;
@@ -167,6 +171,23 @@ input[type="number"] {
     color: var(--bs-body-color);
     background-color: red;
 }
+
+/* Tabs */
+
+#root .character-sheet__tabs {
+    align-items: start;
+    margin-top: 1em;
+}
+
+.favourites__panel:not(:empty) {
+    min-width: 33%;
+}
+
+.tabs__panel {
+    flex-grow: 1;
+}
+
+/* Miscellaneous styles */
 
 .modifier-with-label {
     text-align: center;
