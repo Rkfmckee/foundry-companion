@@ -1,8 +1,13 @@
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { getCharacterSheet, updateCharacterSheet } from "@/services/foundryService";
+import { Box } from "@chakra-ui/react/box";
+import { Button } from "@chakra-ui/react/button";
+import { Collapsible } from "@chakra-ui/react/collapsible";
+import { Tabs } from "@chakra-ui/react/tabs";
 import { Text } from "@chakra-ui/react/typography";
 import { useEffect, useState } from "react";
 import Loading from "../Loading";
+import RStack from "../RStack";
 import CharacterSheetBasicDetails from "./basicDetails/CharacterSheetBasicDetails";
 
 interface CharacterSheetProps {
@@ -12,6 +17,8 @@ interface CharacterSheetProps {
 const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
     const [characterSheet, setCharacterSheet] = useState<ActorSheetData>();
     const [loadingSheet, setLoadingSheet] = useState(false);
+    const [favouritesOpen, setFavouritesOpen] = useState(false);
+    const favouritesButtonLabel = (favouritesOpen ? "Close" : "Open") + " Favourites";
 
     useEffect(() => {
         getCharacterSheetFromFoundry();
@@ -43,6 +50,32 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
     ) : characterSheet ? (
         <>
             <CharacterSheetBasicDetails sheet={characterSheet} setSheet={setCharacterSheet} />
+            <RStack className="character-sheet__tabs">
+                <Collapsible.Root className="favourites__panel" unmountOnExit open={favouritesOpen}>
+                    <Collapsible.Content>
+                        <Box className="character-sheet__panel">List of favourites</Box>
+                    </Collapsible.Content>
+                </Collapsible.Root>
+                <Tabs.Root className="tabs__panel" defaultValue="tab1">
+                    <Tabs.List>
+                        <Button onClick={() => setFavouritesOpen(!favouritesOpen)} variant="ghost">
+                            {favouritesButtonLabel}
+                        </Button>
+                        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+                        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+                        <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
+                    </Tabs.List>
+                    <Tabs.Content value="tab1">
+                        <Box className="character-sheet__panel">Tab 1 content</Box>
+                    </Tabs.Content>
+                    <Tabs.Content value="tab2">
+                        <Box className="character-sheet__panel">Tab 2 content</Box>
+                    </Tabs.Content>
+                    <Tabs.Content value="tab3">
+                        <Box className="character-sheet__panel">Tab 3 content</Box>
+                    </Tabs.Content>
+                </Tabs.Root>
+            </RStack>
         </>
     ) : (
         <>

@@ -1,14 +1,15 @@
 import { getArmourClass, getClasses, getInitiativeBonus, getProficiencyBonus, modifierDisplay } from "@/helpers/dndHelpers";
 import { withinRange } from "@/helpers/numberHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
-import { Avatar, AvatarGroup, HStack, IconButton, Separator, Stack } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, HStack, IconButton, Stack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
 import { ChangeEvent, useState } from "react";
 import AbilityScoreBox from "./AbilityScoreBox";
+import AbilitySeparator from "./AbilitySeparator";
 import HitPointBar from "./HitPointBar";
 import IconButtonWithLabel from "./IconButtonWithLabel";
 import ModifierWithLabel from "./ModifierWithLabel";
-import AbilitySeparator from "./AbilitySeparator";
+import RStack from "@/components/RStack";
 
 interface CharacterSheetBasicDetailsProps {
     sheet: ActorSheetData;
@@ -71,7 +72,7 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
 
     return (
         <Box className="character-sheet__panel">
-            <Stack direction={{ base: "column", md: "row" }}>
+            <RStack>
                 <div>
                     <HStack className="basic-details__identity">
                         <AvatarGroup size="2xl">
@@ -166,7 +167,7 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                     <AbilitySeparator />
                     <AbilityScoreBox name="Charisma" ability={abilities.cha} proficiencyBonus={proficiencyBonus} />
                 </HStack>
-            </Stack>
+            </RStack>
         </Box>
     );
 };
