@@ -15,6 +15,19 @@ export const getProficiencyBonus = (sheet: ActorSheetData) => {
     return 6;
 };
 
+export const getProficiencySymbol = (proficiencyLevel: number) => {
+    switch (proficiencyLevel) {
+        case 0.5:
+            return <div className="prof-circle__half"></div>;
+        case 1:
+            return <div className="prof-circle"></div>;
+        case 2:
+            return <div className="prof-circle__outlined"></div>;
+        default:
+            return "";
+    }
+};
+
 export const modifierDisplay = (modifier: number) => {
     return modifier > 0 ? `+${modifier}` : modifier.toString();
 };

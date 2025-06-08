@@ -15,11 +15,21 @@ const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
         <Box className="character-sheet__panel">
             <RStack>
                 <Grid className="tabs__panel-column" templateRows="auto" templateColumns="auto auto 1fr auto auto">
-                    <GridItem>Prof</GridItem>
-                    <GridItem>Ability</GridItem>
-                    <GridItem>Skill</GridItem>
-                    <GridItem>Mod</GridItem>
-                    <GridItem>Passive</GridItem>
+                    <GridItem className="text-center">
+                        <strong>Prof</strong>
+                    </GridItem>
+                    <GridItem className="text-center">
+                        <strong>Ability</strong>
+                    </GridItem>
+                    <GridItem className="skill-item__skills">
+                        <strong>Skill</strong>
+                    </GridItem>
+                    <GridItem className="text-center">
+                        <strong>Mod</strong>
+                    </GridItem>
+                    <GridItem className="text-center">
+                        <strong>Pass</strong>
+                    </GridItem>
                     <SkillRow skill={sheet.system.skills.acr} name="Acrobatics" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
                     <SkillRow skill={sheet.system.skills.ani} name="Animal Handling" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
                     <SkillRow skill={sheet.system.skills.arc} name="Arcana" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
