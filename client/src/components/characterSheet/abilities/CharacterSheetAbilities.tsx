@@ -1,0 +1,48 @@
+import RStack from "@/components/RStack";
+import { getProficiencyBonus } from "@/helpers/dndHelpers";
+import { ActorSheetData } from "@/schemas/actorSheetSchema";
+import { Grid, GridItem } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react/box";
+import SkillRow from "./SkillRow";
+
+interface CharacterSheetAbilitiesProps {
+    sheet: ActorSheetData;
+    setSheet: (sheet: ActorSheetData) => void;
+}
+
+const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
+    return (
+        <Box className="character-sheet__panel">
+            <RStack>
+                <Grid className="tabs__panel-column" templateRows="auto" templateColumns="auto auto 1fr auto auto">
+                    <GridItem>Prof</GridItem>
+                    <GridItem>Ability</GridItem>
+                    <GridItem>Skill</GridItem>
+                    <GridItem>Mod</GridItem>
+                    <GridItem>Passive</GridItem>
+                    <SkillRow skill={sheet.system.skills.acr} name="Acrobatics" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.ani} name="Animal Handling" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.arc} name="Arcana" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.ath} name="Athletics" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.dec} name="Deception" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.his} name="History" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.ins} name="Insight" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.inv} name="Investigation" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.itm} name="Intimidation" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.med} name="Medicine" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.nat} name="Nature" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.prc} name="Perception" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.prf} name="Performance" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.per} name="Persuasion" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.rel} name="Religion" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.slt} name="Sleight of Hand" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.ste} name="Stealth" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                    <SkillRow skill={sheet.system.skills.sur} name="Survival" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
+                </Grid>
+                <div className="tabs__panel-column">Proficiencies</div>
+            </RStack>
+        </Box>
+    );
+};
+
+export default CharacterSheetAbilities;

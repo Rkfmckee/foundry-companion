@@ -187,6 +187,15 @@ input[type="number"] {
     flex-grow: 1;
 }
 
+.tabs__panel-column {
+    min-width: 50%;
+}
+
+.skill-item {
+    border-bottom: 1px var(--chakra-colors-border) solid;
+    padding: 0.25em 1em;
+}
+
 /* Miscellaneous styles */
 
 .modifier-with-label {

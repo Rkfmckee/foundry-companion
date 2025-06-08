@@ -13,10 +13,36 @@ const AbilitySchema = z.object({
 });
 export type Ability = z.infer<typeof AbilitySchema>;
 
+const AbilitiesSchema = z.object({
+    str: AbilitySchema,
+    dex: AbilitySchema,
+    con: AbilitySchema,
+    int: AbilitySchema,
+    wis: AbilitySchema,
+    cha: AbilitySchema,
+});
+export type Abilities = z.infer<typeof AbilitiesSchema>;
+
+const SkillSchema = z.object({
+    ability: z.enum(["str", "dex", "con", "int", "wis", "cha"]),
+    value: z.number(),
+    bonuses: z.object({
+        check: z.string(),
+        passive: z.string(),
+    }),
+    roll: z.object({
+        min: z.nullable(z.number()),
+        max: z.nullable(z.number()),
+        mode: z.number(),
+    }),
+});
+export type Skill = z.infer<typeof SkillSchema>;
+
 export const ActorSheetDataSchema = z.object({
     name: z.string(),
     img: z.string(),
     system: z.object({
+        abilities: AbilitiesSchema,
         attributes: z.object({
             hp: z.object({
                 value: z.number(),
@@ -42,20 +68,39 @@ export const ActorSheetDataSchema = z.object({
             }),
             inspiration: z.boolean(),
         }),
-        abilities: z.object({
-            str: AbilitySchema,
-            dex: AbilitySchema,
-            con: AbilitySchema,
-            int: AbilitySchema,
-            wis: AbilitySchema,
-            cha: AbilitySchema,
+        favorites: z.array(
+            z.object({
+                type: z.string(),
+                id: z.string(),
+                sort: z.number(),
+            })
+        ),
+        skills: z.object({
+            acr: SkillSchema,
+            ani: SkillSchema,
+            arc: SkillSchema,
+            ath: SkillSchema,
+            dec: SkillSchema,
+            his: SkillSchema,
+            ins: SkillSchema,
+            itm: SkillSchema,
+            inv: SkillSchema,
+            med: SkillSchema,
+            nat: SkillSchema,
+            prc: SkillSchema,
+            prf: SkillSchema,
+            per: SkillSchema,
+            rel: SkillSchema,
+            slt: SkillSchema,
+            ste: SkillSchema,
+            sur: SkillSchema,
         }),
     }),
     items: z.array(
         z.object({
             _id: z.string(),
             name: z.string(),
-            type: z.union([z.literal("class"), z.literal("feat"), z.literal("spell")]),
+            type: z.enum(["class", "feat", "spell", "weapon"]),
             system: z.object({
                 levels: z.optional(z.number()),
             }),

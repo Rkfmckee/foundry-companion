@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Loading from "../Loading";
 import RStack from "../RStack";
 import CharacterSheetBasicDetails from "./basicDetails/CharacterSheetBasicDetails";
+import CharacterSheetAbilities from "./abilities/CharacterSheetAbilities";
 
 interface CharacterSheetProps {
     uuid: string;
@@ -17,6 +18,7 @@ interface CharacterSheetProps {
 const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
     const [characterSheet, setCharacterSheet] = useState<ActorSheetData>();
     const [loadingSheet, setLoadingSheet] = useState(false);
+
     const [favouritesOpen, setFavouritesOpen] = useState(false);
     const favouritesButtonLabel = (favouritesOpen ? "Close" : "Open") + " Favourites";
 
@@ -61,12 +63,12 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
                         <Button onClick={() => setFavouritesOpen(!favouritesOpen)} variant="ghost">
                             {favouritesButtonLabel}
                         </Button>
-                        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+                        <Tabs.Trigger value="abilities">Abilities</Tabs.Trigger>
                         <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
                         <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
                     </Tabs.List>
-                    <Tabs.Content value="tab1">
-                        <Box className="character-sheet__panel">Tab 1 content</Box>
+                    <Tabs.Content value="abilities">
+                        <CharacterSheetAbilities sheet={characterSheet} setSheet={setCharacterSheet} />
                     </Tabs.Content>
                     <Tabs.Content value="tab2">
                         <Box className="character-sheet__panel">Tab 2 content</Box>
