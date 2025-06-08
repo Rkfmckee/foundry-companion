@@ -3,6 +3,8 @@ import { getProficiencyBonus } from "@/helpers/dndHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
+import OptionalProficiencyCode from "./OptionalProficiencyCode";
+import ProficienciesSection from "./ProficienciesSection";
 import SkillRow from "./SkillRow";
 
 interface CharacterSheetAbilitiesProps {
@@ -11,10 +13,13 @@ interface CharacterSheetAbilitiesProps {
 }
 
 const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
+    const movement = sheet.system.attributes.movement;
+    const senses = sheet.system.attributes.senses;
+
     return (
         <Box className="character-sheet__panel">
-            <RStack>
-                <Grid className="tabs__panel-column" templateRows="auto" templateColumns="auto auto 1fr auto auto">
+            <RStack gap={0}>
+                <Grid className="tabs__panel-column right-gap" templateRows="auto" templateColumns="auto auto 1fr auto auto">
                     <GridItem className="text-center">
                         <strong>Prof</strong>
                     </GridItem>
@@ -49,7 +54,21 @@ const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
                     <SkillRow skill={sheet.system.skills.ste} name="Stealth" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
                     <SkillRow skill={sheet.system.skills.sur} name="Survival" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
                 </Grid>
-                <div className="tabs__panel-column">Proficiencies</div>
+                <div className="tabs__panel-column left-gap">
+                    <ProficienciesSection title="Senses" icon="eye">
+                        <OptionalProficiencyCode title="Darkvision" value={senses.darkvision} units={senses.units} />
+                        <OptionalProficiencyCode title="Blindsight" value={senses.blindsight} units={senses.units} />
+                        <OptionalProficiencyCode title="Tremorsense" value={senses.tremorsense} units={senses.units} />
+                        <OptionalProficiencyCode title="Truesight" value={senses.truesight} units={senses.units} />
+                    </ProficienciesSection>
+                    <ProficienciesSection title="Movement" icon="person-running">
+                        <OptionalProficiencyCode title="Walk" value={movement.walk} units={movement.units} />
+                        <OptionalProficiencyCode title="Fly" value={movement.fly} units={movement.units} hover={movement.hover} />
+                        <OptionalProficiencyCode title="Swim" value={movement.swim} units={movement.units} />
+                        <OptionalProficiencyCode title="Climb" value={movement.climb} units={movement.units} />
+                        <OptionalProficiencyCode title="Burrow" value={movement.burrow} units={movement.units} />
+                    </ProficienciesSection>
+                </div>
             </RStack>
         </Box>
     );

@@ -200,7 +200,30 @@ input[type="number"] {
     padding: 0 0.75em;
 }
 
+.proficiency-title {
+    border-bottom: 1px var(--chakra-colors-border) solid;
+}
+
+.proficiency-text {
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+    color: var(--bs-body-color);
+}
+
+.proficiency-separator {
+    color: var(--chakra-colors-border);
+    margin: 0 0.5em;
+}
+
 /* Miscellaneous styles */
+
+.left-gap {
+    padding-left: 1em;
+}
+
+.right-gap {
+    padding-right: 1em;
+}
 
 .modifier-with-label {
     text-align: center;
