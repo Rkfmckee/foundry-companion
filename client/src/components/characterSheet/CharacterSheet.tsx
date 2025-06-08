@@ -53,12 +53,12 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
         <>
             <CharacterSheetBasicDetails sheet={characterSheet} setSheet={setCharacterSheet} />
             <RStack className="character-sheet__tabs">
-                <Collapsible.Root className="favourites__panel" unmountOnExit open={favouritesOpen}>
+                <Collapsible.Root className="favourites__panel" open={favouritesOpen} unmountOnExit lazyMount>
                     <Collapsible.Content>
                         <Box className="character-sheet__panel">List of favourites</Box>
                     </Collapsible.Content>
                 </Collapsible.Root>
-                <Tabs.Root className="tabs__panel" defaultValue="tab1">
+                <Tabs.Root className="tabs__panel" defaultValue="abilities">
                     <Tabs.List>
                         <Button onClick={() => setFavouritesOpen(!favouritesOpen)} variant="ghost">
                             {favouritesButtonLabel}
