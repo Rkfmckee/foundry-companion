@@ -55,12 +55,6 @@ const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
                     <SkillRow skill={sheet.system.skills.sur} name="Survival" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
                 </Grid>
                 <div className="tabs__panel-column left-gap">
-                    <ProficienciesSection title="Senses" icon="eye">
-                        <OptionalProficiencyCode title="Darkvision" value={senses.darkvision} units={senses.units} />
-                        <OptionalProficiencyCode title="Blindsight" value={senses.blindsight} units={senses.units} />
-                        <OptionalProficiencyCode title="Tremorsense" value={senses.tremorsense} units={senses.units} />
-                        <OptionalProficiencyCode title="Truesight" value={senses.truesight} units={senses.units} />
-                    </ProficienciesSection>
                     <ProficienciesSection title="Movement" icon="person-running">
                         <OptionalProficiencyCode title="Walk" value={movement.walk} units={movement.units} />
                         <OptionalProficiencyCode title="Fly" value={movement.fly} units={movement.units} hover={movement.hover} />
@@ -68,6 +62,15 @@ const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
                         <OptionalProficiencyCode title="Climb" value={movement.climb} units={movement.units} />
                         <OptionalProficiencyCode title="Burrow" value={movement.burrow} units={movement.units} />
                     </ProficienciesSection>
+
+                    <ProficienciesSection title="Senses" icon="eye">
+                        <OptionalProficiencyCode title="Darkvision" value={senses.darkvision} units={senses.units} />
+                        <OptionalProficiencyCode title="Blindsight" value={senses.blindsight} units={senses.units} />
+                        <OptionalProficiencyCode title="Tremorsense" value={senses.tremorsense} units={senses.units} />
+                        <OptionalProficiencyCode title="Truesight" value={senses.truesight} units={senses.units} />
+                    </ProficienciesSection>
+
+                    <ProficienciesSection title="Senses" icon="eye"></ProficienciesSection>
                 </div>
             </RStack>
         </Box>

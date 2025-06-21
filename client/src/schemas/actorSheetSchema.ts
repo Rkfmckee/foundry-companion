@@ -38,11 +38,39 @@ const SkillSchema = z.object({
 });
 export type Skill = z.infer<typeof SkillSchema>;
 
+const DamageBypasses = z.enum(["ada", "mgc", "sil"]);
+
+const DamageAttribute = z.object({
+    value: z.array(z.string()),
+    custom: z.string(),
+    bypasses: z.array(DamageBypasses),
+});
+
 export const ActorSheetDataSchema = z.object({
     name: z.string(),
     img: z.string(),
     system: z.object({
         abilities: AbilitiesSchema,
+        skills: z.object({
+            acr: SkillSchema,
+            ani: SkillSchema,
+            arc: SkillSchema,
+            ath: SkillSchema,
+            dec: SkillSchema,
+            his: SkillSchema,
+            ins: SkillSchema,
+            itm: SkillSchema,
+            inv: SkillSchema,
+            med: SkillSchema,
+            nat: SkillSchema,
+            prc: SkillSchema,
+            prf: SkillSchema,
+            per: SkillSchema,
+            rel: SkillSchema,
+            slt: SkillSchema,
+            ste: SkillSchema,
+            sur: SkillSchema,
+        }),
         attributes: z.object({
             hp: z.object({
                 value: z.number(),
@@ -76,6 +104,51 @@ export const ActorSheetDataSchema = z.object({
             }),
             inspiration: z.boolean(),
         }),
+        traits: z.object({
+            di: DamageAttribute,
+            dr: DamageAttribute,
+            dv: DamageAttribute,
+            dm: z.object({
+                amount: z.object({
+                    acid: z.string(),
+                    bludgeoning: z.string(),
+                    cold: z.string(),
+                    fire: z.string(),
+                    force: z.string(),
+                    lightning: z.string(),
+                    necrotic: z.string(),
+                    piercing: z.string(),
+                    poison: z.string(),
+                    psychic: z.string(),
+                    radiant: z.string(),
+                    slashing: z.string(),
+                    thunder: z.string(),
+                }),
+                bypasses: z.array(DamageBypasses),
+            }),
+            ci: z.object({
+                value: z.array(z.string()),
+                custom: z.string(),
+            }),
+            languages: z.object({
+                value: z.array(z.string()),
+                custom: z.string(),
+                communication: z.object({
+                    telepathy: z.object({
+                        value: z.number(),
+                        units: z.string(),
+                    }),
+                }),
+            }),
+            weaponProf: z.object({
+                value: z.array(z.string()),
+                custom: z.string(),
+            }),
+            armorProf: z.object({
+                value: z.array(z.string()),
+                custom: z.string(),
+            }),
+        }),
         favorites: z.array(
             z.object({
                 type: z.string(),
@@ -83,26 +156,6 @@ export const ActorSheetDataSchema = z.object({
                 sort: z.number(),
             })
         ),
-        skills: z.object({
-            acr: SkillSchema,
-            ani: SkillSchema,
-            arc: SkillSchema,
-            ath: SkillSchema,
-            dec: SkillSchema,
-            his: SkillSchema,
-            ins: SkillSchema,
-            itm: SkillSchema,
-            inv: SkillSchema,
-            med: SkillSchema,
-            nat: SkillSchema,
-            prc: SkillSchema,
-            prf: SkillSchema,
-            per: SkillSchema,
-            rel: SkillSchema,
-            slt: SkillSchema,
-            ste: SkillSchema,
-            sur: SkillSchema,
-        }),
     }),
     items: z.array(
         z.object({
