@@ -38,12 +38,15 @@ const SkillSchema = z.object({
 });
 export type Skill = z.infer<typeof SkillSchema>;
 
-const DamageBypasses = z.enum(["ada", "mgc", "sil"]);
-
-const DamageAttribute = z.object({
+const TraitSchema = z.object({
     value: z.array(z.string()),
     custom: z.string(),
-    bypasses: z.array(DamageBypasses),
+});
+export type Trait = z.infer<typeof TraitSchema>;
+
+const DamageBypassesSchema = z.array(z.enum(["ada", "mgc", "sil"]));
+const DamageTraitSchema = TraitSchema.extend({
+    bypasses: DamageBypassesSchema,
 });
 
 export const ActorSheetDataSchema = z.object({
@@ -105,9 +108,10 @@ export const ActorSheetDataSchema = z.object({
             inspiration: z.boolean(),
         }),
         traits: z.object({
-            di: DamageAttribute,
-            dr: DamageAttribute,
-            dv: DamageAttribute,
+            ci: TraitSchema,
+            di: DamageTraitSchema,
+            dr: DamageTraitSchema,
+            dv: DamageTraitSchema,
             dm: z.object({
                 amount: z.object({
                     acid: z.string(),
@@ -124,15 +128,9 @@ export const ActorSheetDataSchema = z.object({
                     slashing: z.string(),
                     thunder: z.string(),
                 }),
-                bypasses: z.array(DamageBypasses),
+                bypasses: DamageBypassesSchema,
             }),
-            ci: z.object({
-                value: z.array(z.string()),
-                custom: z.string(),
-            }),
-            languages: z.object({
-                value: z.array(z.string()),
-                custom: z.string(),
+            languages: TraitSchema.extend({
                 communication: z.object({
                     telepathy: z.object({
                         value: z.number(),
@@ -140,14 +138,8 @@ export const ActorSheetDataSchema = z.object({
                     }),
                 }),
             }),
-            weaponProf: z.object({
-                value: z.array(z.string()),
-                custom: z.string(),
-            }),
-            armorProf: z.object({
-                value: z.array(z.string()),
-                custom: z.string(),
-            }),
+            weaponProf: TraitSchema,
+            armorProf: TraitSchema,
         }),
         favorites: z.array(
             z.object({

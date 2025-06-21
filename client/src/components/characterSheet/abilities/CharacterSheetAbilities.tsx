@@ -3,6 +3,7 @@ import { getProficiencyBonus } from "@/helpers/dndHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
+import TraitProficiencyCode from "./DamageConditionProficiencyCode";
 import OptionalProficiencyCode from "./OptionalProficiencyCode";
 import ProficienciesSection from "./ProficienciesSection";
 import SkillRow from "./SkillRow";
@@ -70,7 +71,33 @@ const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
                         <OptionalProficiencyCode title="Truesight" value={senses.truesight} units={senses.units} />
                     </ProficienciesSection>
 
-                    <ProficienciesSection title="Senses" icon="eye"></ProficienciesSection>
+                    <ProficienciesSection title="Languages" icon="comment">
+                        <TraitProficiencyCode data={sheet.system.traits.languages} />
+                    </ProficienciesSection>
+
+                    <ProficienciesSection title="Condition immunities" icon="shield-heart">
+                        <TraitProficiencyCode data={sheet.system.traits.ci} />
+                    </ProficienciesSection>
+
+                    <ProficienciesSection title="Damage immunities" icon="heart">
+                        <TraitProficiencyCode data={sheet.system.traits.di} />
+                    </ProficienciesSection>
+
+                    <ProficienciesSection title="Damage resistances" icon="heart-pulse">
+                        <TraitProficiencyCode data={sheet.system.traits.dr} />
+                    </ProficienciesSection>
+
+                    <ProficienciesSection title="Damage vulnerabilities" icon="heart-crack">
+                        <TraitProficiencyCode data={sheet.system.traits.dv} />
+                    </ProficienciesSection>
+
+                    <ProficienciesSection title="Weapon proficiencies" icon="utensils">
+                        <TraitProficiencyCode data={sheet.system.traits.weaponProf} />
+                    </ProficienciesSection>
+
+                    <ProficienciesSection title="Armour proficiencies" icon="shield">
+                        <TraitProficiencyCode data={sheet.system.traits.armorProf} />
+                    </ProficienciesSection>
                 </div>
             </RStack>
         </Box>
