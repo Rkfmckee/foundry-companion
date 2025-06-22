@@ -59,22 +59,30 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
                     </Collapsible.Content>
                 </Collapsible.Root>
                 <Tabs.Root className="tabs__panel" defaultValue="abilities">
-                    <Tabs.List>
+                    <Tabs.List className="tabs__list">
                         <Button onClick={() => setFavouritesOpen(!favouritesOpen)} variant="ghost">
                             {favouritesButtonLabel}
                         </Button>
                         <Tabs.Trigger value="abilities">Abilities</Tabs.Trigger>
-                        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
-                        <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
+                        <Tabs.Trigger value="inventory">Inventory</Tabs.Trigger>
+                        <Tabs.Trigger value="features">Features</Tabs.Trigger>
+                        <Tabs.Trigger value="spells">Spells</Tabs.Trigger>
+                        <Tabs.Trigger value="effects">Effects</Tabs.Trigger>
                     </Tabs.List>
                     <Tabs.Content value="abilities">
                         <CharacterSheetAbilities sheet={characterSheet} setSheet={setCharacterSheet} />
                     </Tabs.Content>
-                    <Tabs.Content value="tab2">
-                        <Box className="character-sheet__panel">Tab 2 content</Box>
+                    <Tabs.Content value="inventory">
+                        <Box className="character-sheet__panel">Inventory content</Box>
                     </Tabs.Content>
-                    <Tabs.Content value="tab3">
-                        <Box className="character-sheet__panel">Tab 3 content</Box>
+                    <Tabs.Content value="features">
+                        <Box className="character-sheet__panel">Features content</Box>
+                    </Tabs.Content>
+                    <Tabs.Content value="spells">
+                        <Box className="character-sheet__panel">Spells content</Box>
+                    </Tabs.Content>
+                    <Tabs.Content value="effects">
+                        <Box className="character-sheet__panel">Effects content</Box>
                     </Tabs.Content>
                 </Tabs.Root>
             </RStack>

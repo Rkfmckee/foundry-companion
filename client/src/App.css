@@ -187,6 +187,10 @@ input[type="number"] {
     flex-grow: 1;
 }
 
+.tabs__list {
+    flex-wrap: wrap;
+}
+
 .tabs__panel-column {
     flex: 1 1 0px;
 }
