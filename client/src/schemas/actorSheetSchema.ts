@@ -50,6 +50,10 @@ const DamageTraitSchema = TraitSchema.extend({
     bypasses: DamageBypassesSchema,
 });
 
+export const InventoryItemTypes = ["weapon", "consumable", "container", "equipment", "loot", "tool"] as const;
+const InventoryItemTypeSchema = z.enum(InventoryItemTypes);
+export type InventoryItemType = z.infer<typeof InventoryItemTypeSchema>;
+
 const ItemDamageSchema = z.object({
     number: z.nullable(z.number()),
     denomination: z.nullable(z.number()),
@@ -167,7 +171,7 @@ export const ActorSheetDataSchema = z.object({
             _id: z.string(),
             sort: z.number(),
             name: z.string(),
-            type: z.enum(["class", "feat", "spell", "weapon", "consumable", "container", "equipment", "loot", "tool"]),
+            type: InventoryItemTypeSchema.or(z.enum(["class", "feat", "spell"])),
             properties: z.optional(z.array(z.string())),
             proficient: z.optional(z.nullable(z.number())),
             equipped: z.optional(z.boolean()),

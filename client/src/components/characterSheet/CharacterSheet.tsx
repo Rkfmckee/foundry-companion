@@ -12,6 +12,7 @@ import RStack from "../RStack";
 import ZodErrors from "../ZodErrors";
 import CharacterSheetAbilities from "./abilities/CharacterSheetAbilities";
 import CharacterSheetBasicDetails from "./basicDetails/CharacterSheetBasicDetails";
+import CharacterSheetInventory from "./inventory/CharacterSheetInventory";
 
 interface CharacterSheetProps {
     uuid: string;
@@ -82,7 +83,7 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
                         <CharacterSheetAbilities sheet={characterSheet} setSheet={setCharacterSheet} />
                     </Tabs.Content>
                     <Tabs.Content value="inventory">
-                        <Box className="character-sheet__panel">Inventory content</Box>
+                        <CharacterSheetInventory sheet={characterSheet} setSheet={setCharacterSheet} />
                     </Tabs.Content>
                     <Tabs.Content value="features">
                         <Box className="character-sheet__panel">Features content</Box>
