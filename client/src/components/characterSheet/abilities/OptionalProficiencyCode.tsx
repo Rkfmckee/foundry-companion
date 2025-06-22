@@ -3,7 +3,7 @@ import ProficiencyCode from "./ProficiencyCode";
 interface OptionalProficiencyCodeProps {
     title: string;
     value: number | null;
-    units: string;
+    units: string | null;
     hover?: boolean;
 }
 

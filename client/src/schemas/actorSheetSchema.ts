@@ -94,12 +94,12 @@ export const ActorSheetDataSchema = z.object({
         attributes: z.object({
             hp: z.object({
                 value: z.number(),
-                max: z.number(),
+                max: z.nullable(z.number()),
                 temp: z.nullable(z.number()),
             }),
             ac: z.object({
                 calc: z.string(),
-                flat: z.number(),
+                flat: z.nullable(z.number()),
             }),
             init: z.object({
                 ability: z.string(),
@@ -111,7 +111,7 @@ export const ActorSheetDataSchema = z.object({
                 fly: z.nullable(z.number()),
                 swim: z.nullable(z.number()),
                 walk: z.nullable(z.number()),
-                units: z.string(),
+                units: z.nullable(z.string()),
                 hover: z.boolean(),
             }),
             senses: z.object({
@@ -119,7 +119,7 @@ export const ActorSheetDataSchema = z.object({
                 blindsight: z.nullable(z.number()),
                 tremorsense: z.nullable(z.number()),
                 truesight: z.nullable(z.number()),
-                units: z.string(),
+                units: z.nullable(z.string()),
                 special: z.string(),
             }),
             inspiration: z.boolean(),
@@ -131,28 +131,30 @@ export const ActorSheetDataSchema = z.object({
             dv: DamageTraitSchema,
             dm: z.object({
                 amount: z.object({
-                    acid: z.string(),
-                    bludgeoning: z.string(),
-                    cold: z.string(),
-                    fire: z.string(),
-                    force: z.string(),
-                    lightning: z.string(),
-                    necrotic: z.string(),
-                    piercing: z.string(),
-                    poison: z.string(),
-                    psychic: z.string(),
-                    radiant: z.string(),
-                    slashing: z.string(),
-                    thunder: z.string(),
+                    acid: z.optional(z.string()),
+                    bludgeoning: z.optional(z.string()),
+                    cold: z.optional(z.string()),
+                    fire: z.optional(z.string()),
+                    force: z.optional(z.string()),
+                    lightning: z.optional(z.string()),
+                    necrotic: z.optional(z.string()),
+                    piercing: z.optional(z.string()),
+                    poison: z.optional(z.string()),
+                    psychic: z.optional(z.string()),
+                    radiant: z.optional(z.string()),
+                    slashing: z.optional(z.string()),
+                    thunder: z.optional(z.string()),
                 }),
                 bypasses: DamageBypassesSchema,
             }),
             languages: TraitSchema.extend({
                 communication: z.object({
-                    telepathy: z.object({
-                        value: z.number(),
-                        units: z.string(),
-                    }),
+                    telepathy: z.optional(
+                        z.object({
+                            value: z.number(),
+                            units: z.string(),
+                        })
+                    ),
                 }),
             }),
             weaponProf: TraitSchema,
