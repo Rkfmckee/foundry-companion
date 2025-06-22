@@ -94,6 +94,7 @@ input[type="number"] {
 .crop-text {
     white-space: nowrap;
     overflow: hidden;
+    min-width: 0;
 }
 
 .where-is-this {
@@ -104,8 +105,9 @@ input[type="number"] {
 
 .character-sheet__panel {
     background-color: var(--colour-panel);
-    padding: 1em;
     border-radius: var(--chakra-radii-lg);
+    padding: 1em;
+    max-width: 95vw;
 }
 
 /* Basic details */
@@ -202,7 +204,6 @@ input[type="number"] {
 }
 
 .skill-item {
-    border-bottom: 1px var(--chakra-colors-border) solid;
     padding: 0.25em 0.75em;
 }
 
@@ -210,7 +211,7 @@ input[type="number"] {
     padding: 0 0.75em;
 }
 
-.proficiency-title {
+.sheet-section-title {
     border-bottom: 1px var(--chakra-colors-border) solid;
 }
 
@@ -244,6 +245,10 @@ input[type="number"] {
     i {
         margin-right: 0.25em;
     }
+}
+
+.bottom-border {
+    border-bottom: 1px var(--chakra-colors-border) solid;
 }
 
 .fit-content-center {

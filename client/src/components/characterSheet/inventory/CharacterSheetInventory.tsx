@@ -1,6 +1,6 @@
-import { ActorSheetData, InventoryItemTypes } from "@/schemas/actorSheetSchema";
+import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { Box } from "@chakra-ui/react/box";
-import { Text } from "@chakra-ui/react/typography";
+import InventorySection from "./InventorySection";
 
 interface CharacterSheetAbilitiesProps {
     sheet: ActorSheetData;
@@ -8,21 +8,21 @@ interface CharacterSheetAbilitiesProps {
 }
 
 const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
-    const inventoryItemTypes: readonly string[] = InventoryItemTypes;
-    const inventoryItems = sheet.items.filter((i) => inventoryItemTypes.includes(i.type));
+    const weapons = sheet.items.filter((i) => i.type == "weapon");
+    const equipment = sheet.items.filter((i) => i.type == "equipment");
+    const consumables = sheet.items.filter((i) => i.type == "consumable");
+    const tools = sheet.items.filter((i) => i.type == "tool");
+    const loot = sheet.items.filter((i) => i.type == "loot");
+    const containers = sheet.items.filter((i) => i.type == "container");
 
     return (
         <Box className="character-sheet__panel">
-            {inventoryItems ? (
-                <div>
-                    {inventoryItems.map((i, idx) => (
-                        <Text key={idx}>{i.name}</Text>
-                    ))}
-                    <Text></Text>
-                </div>
-            ) : (
-                <Text>Inventory empty</Text>
-            )}
+            <InventorySection title="Weapons" icon="utensils" items={weapons} />
+            <InventorySection title="Equipment" icon="shield" items={equipment} />
+            <InventorySection title="Consumables" icon="flask" items={consumables} />
+            <InventorySection title="Tools" icon="wrench" items={tools} />
+            <InventorySection title="Loot" icon="gem" items={loot} />
+            <InventorySection title="Containers" icon="suitcase" items={containers} />
         </Box>
     );
 };
