@@ -3,7 +3,7 @@ import { getProficiencyBonus } from "@/helpers/dndHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
-import TraitProficiencyCode from "./DamageConditionProficiencyCode";
+import TraitProficiencyCode from "./TraitProficiencyCode";
 import OptionalProficiencyCode from "./OptionalProficiencyCode";
 import ProficienciesSection from "./ProficienciesSection";
 import SkillRow from "./SkillRow";
@@ -19,8 +19,8 @@ const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
 
     return (
         <Box className="character-sheet__panel">
-            <RStack gap={0}>
-                <Grid className="tabs__panel-column right-gap" templateRows="auto" templateColumns="auto auto 1fr auto auto">
+            <RStack gap={6}>
+                <Grid className="tabs__panel-column" templateRows="auto" templateColumns="auto auto 1fr auto auto">
                     <GridItem className="text-center">
                         <strong>Prof</strong>
                     </GridItem>
@@ -55,7 +55,7 @@ const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
                     <SkillRow skill={sheet.system.skills.ste} name="Stealth" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
                     <SkillRow skill={sheet.system.skills.sur} name="Survival" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
                 </Grid>
-                <div className="tabs__panel-column left-gap">
+                <div className="tabs__panel-column">
                     <ProficienciesSection title="Movement" icon="person-running">
                         <OptionalProficiencyCode title="Walk" value={movement.walk} units={movement.units} />
                         <OptionalProficiencyCode title="Fly" value={movement.fly} units={movement.units} hover={movement.hover} />

@@ -188,7 +188,7 @@ input[type="number"] {
 }
 
 .tabs__panel-column {
-    min-width: 50%;
+    flex: 1 1 0px;
 }
 
 .skill-item {
@@ -216,14 +216,6 @@ input[type="number"] {
 }
 
 /* Miscellaneous styles */
-
-.left-gap {
-    padding-left: 1em;
-}
-
-.right-gap {
-    padding-right: 1em;
-}
 
 .modifier-with-label {
     text-align: center;

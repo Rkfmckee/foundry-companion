@@ -86,25 +86,23 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                         </div>
                     </HStack>
                     <div className="basic-details__stats">
-                        <Stack direction={{ base: "column", md: "row" }}>
+                        <RStack>
                             <div className="col-md-6 basic-details__stats-hp">
-                                <div>
-                                    <HStack>
-                                        <div className="basic-details__stats-hp-main">
-                                            <small>Hit Points</small>
-                                            <HitPointBar
-                                                current={hitPoints.value}
-                                                onCurrentChanged={(event) => hitPointsChanged(event, "hp")}
-                                                max={hitPoints.max}
-                                                backgroundStyle={`linear-gradient(90deg, green ${hitPointsPercentage}%, grey ${hitPointsPercentage}%)`}
-                                            />
-                                        </div>
-                                        <div className="basic-details__stats-hp-temp">
-                                            <small>Temp</small>
-                                            <input className="hitpoint-temp" type="number" value={hitPoints.temp ?? 0} onChange={(event) => hitPointsChanged(event, "temp")} />
-                                        </div>
-                                    </HStack>
-                                </div>
+                                <HStack>
+                                    <div className="basic-details__stats-hp-main">
+                                        <small>Hit Points</small>
+                                        <HitPointBar
+                                            current={hitPoints.value}
+                                            onCurrentChanged={(event) => hitPointsChanged(event, "hp")}
+                                            max={hitPoints.max}
+                                            backgroundStyle={`linear-gradient(90deg, green ${hitPointsPercentage}%, grey ${hitPointsPercentage}%)`}
+                                        />
+                                    </div>
+                                    <div className="basic-details__stats-hp-temp">
+                                        <small>Temp</small>
+                                        <input className="hitpoint-temp" type="number" value={hitPoints.temp ?? 0} onChange={(event) => hitPointsChanged(event, "temp")} />
+                                    </div>
+                                </HStack>
                             </div>
                             <div className="col-md-6 basic-details__stats-misc">
                                 <HStack className="mx-3">
@@ -122,7 +120,7 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                                     </div>
                                 </HStack>
                             </div>
-                        </Stack>
+                        </RStack>
                     </div>
                     <div className="basic-details__stats">
                         <HStack className="basic-details__stats-stats" gap="1em">
