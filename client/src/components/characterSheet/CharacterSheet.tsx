@@ -6,10 +6,12 @@ import { Collapsible } from "@chakra-ui/react/collapsible";
 import { Tabs } from "@chakra-ui/react/tabs";
 import { Text } from "@chakra-ui/react/typography";
 import { useEffect, useState } from "react";
+import { ZodError, ZodIssue } from "zod";
 import Loading from "../Loading";
 import RStack from "../RStack";
-import CharacterSheetBasicDetails from "./basicDetails/CharacterSheetBasicDetails";
+import ZodErrors from "../ZodErrors";
 import CharacterSheetAbilities from "./abilities/CharacterSheetAbilities";
+import CharacterSheetBasicDetails from "./basicDetails/CharacterSheetBasicDetails";
 
 interface CharacterSheetProps {
     uuid: string;
@@ -18,6 +20,7 @@ interface CharacterSheetProps {
 const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
     const [characterSheet, setCharacterSheet] = useState<ActorSheetData>();
     const [loadingSheet, setLoadingSheet] = useState(false);
+    const [errors, setErrors] = useState<ZodIssue[]>();
 
     const [favouritesOpen, setFavouritesOpen] = useState(false);
     const favouritesButtonLabel = (favouritesOpen ? "Close" : "Open") + " Favourites";
@@ -29,8 +32,14 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
     const getCharacterSheetFromFoundry = async () => {
         setLoadingSheet(true);
 
-        const sheet = await getCharacterSheet(uuid);
-        setCharacterSheet(sheet);
+        const response = await getCharacterSheet(uuid);
+
+        if (response instanceof ZodError) {
+            setErrors(response.errors);
+        } else {
+            setCharacterSheet(response.data);
+            setErrors(undefined);
+        }
 
         setLoadingSheet(false);
     };
@@ -58,7 +67,7 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
                         <Box className="character-sheet__panel">List of favourites</Box>
                     </Collapsible.Content>
                 </Collapsible.Root>
-                <Tabs.Root className="tabs__panel" defaultValue="abilities">
+                <Tabs.Root className="tabs__panel" defaultValue="inventory">
                     <Tabs.List className="tabs__list">
                         <Button onClick={() => setFavouritesOpen(!favouritesOpen)} variant="ghost">
                             {favouritesButtonLabel}
@@ -87,6 +96,8 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
                 </Tabs.Root>
             </RStack>
         </>
+    ) : errors ? (
+        <ZodErrors errors={errors} />
     ) : (
         <>
             <Text className="text-center">

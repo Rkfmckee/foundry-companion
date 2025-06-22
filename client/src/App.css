@@ -15,6 +15,12 @@ html.dark {
     --colour-panel: var(--chakra-colors-bg-panel);
 }
 
+/* Colours */
+
+.colour-muted {
+    color: var(--chakra-colors-fg-muted);
+}
+
 /* Override bootstrap/base styles */
 
 #root h4,
@@ -238,6 +244,11 @@ input[type="number"] {
     i {
         margin-right: 0.25em;
     }
+}
+
+.fit-content-center {
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .ability-group {
