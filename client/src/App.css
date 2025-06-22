@@ -187,6 +187,34 @@ input[type="number"] {
     flex-grow: 1;
 }
 
+.tabs__panel-column {
+    flex: 1 1 0px;
+}
+
+.skill-item {
+    border-bottom: 1px var(--chakra-colors-border) solid;
+    padding: 0.25em 0.75em;
+}
+
+.skill-item__skills {
+    padding: 0 0.75em;
+}
+
+.proficiency-title {
+    border-bottom: 1px var(--chakra-colors-border) solid;
+}
+
+.proficiency-text {
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+    color: var(--bs-body-color);
+}
+
+.proficiency-separator {
+    color: var(--chakra-colors-border);
+    margin: 0 0.5em;
+}
+
 /* Miscellaneous styles */
 
 .modifier-with-label {
@@ -222,4 +250,38 @@ input[type="number"] {
 .line {
     border-left: 2px solid var(--bs-body-color);
     height: 100%;
+}
+
+.prof-circle,
+.prof-circle__half,
+.prof-circle__outlined {
+    width: 1em;
+    height: 1em;
+    background-color: var(--bs-body-color);
+    margin: 0.25em 0;
+    border-radius: 50%;
+}
+
+.prof-circle__half {
+    width: 0.5em;
+    border-radius: 1rem 0 0 1rem;
+}
+
+.prof-circle__outlined {
+    position: relative;
+    outline: 1px solid var(--colour-panel);
+    z-index: 2;
+}
+
+.prof-circle__outlined::before {
+    position: absolute;
+    content: "";
+    display: block;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    outline: 2px solid var(--bs-body-color);
+    border-radius: 50%;
+    z-index: 1;
 }

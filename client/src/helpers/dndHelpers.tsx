@@ -1,4 +1,4 @@
-import { ActorSheetData } from "@/schemas/actorSheetSchema";
+import { Abilities, ActorSheetData } from "@/schemas/actorSheetSchema";
 
 export const getProficiencyBonus = (sheet: ActorSheetData) => {
     const characterLevel = getClasses(sheet)
@@ -15,19 +15,39 @@ export const getProficiencyBonus = (sheet: ActorSheetData) => {
     return 6;
 };
 
+export const getProficiencySymbol = (proficiencyLevel: number) => {
+    switch (proficiencyLevel) {
+        case 0.5:
+            return <div className="prof-circle__half"></div>;
+        case 1:
+            return <div className="prof-circle"></div>;
+        case 2:
+            return <div className="prof-circle__outlined"></div>;
+        default:
+            return "";
+    }
+};
+
 export const modifierDisplay = (modifier: number) => {
     return modifier > 0 ? `+${modifier}` : modifier.toString();
 };
 
 export const toModifier = (value: number, bonus: number = 0) => {
-    const modifier = Math.floor((value - 10) / 2) + bonus;
-    return modifierDisplay(modifier);
+    return Math.floor((value - 10) / 2) + bonus;
+};
+
+export const toModifierDisplay = (value: number, bonus: number = 0) => {
+    return modifierDisplay(toModifier(value, bonus));
 };
 
 export const toModifierWithProficiency = (value: number, proficiencyBonus: number, proficiencyLevel: number) => {
     const bonus = proficiencyBonus * proficiencyLevel;
-    const modifier = Math.floor((value - 10) / 2) + bonus;
-    return modifier > 0 ? `+${modifier}` : modifier;
+    return toModifier(value, bonus);
+};
+
+export const toModifierWithProficiencyDisplay = (value: number, proficiencyBonus: number, proficiencyLevel: number) => {
+    const bonus = proficiencyBonus * proficiencyLevel;
+    return toModifierDisplay(value, bonus);
 };
 
 export const getClasses = (sheet: ActorSheetData) => {
@@ -46,9 +66,13 @@ export const getInitiativeBonus = (sheet: ActorSheetData) => {
     const initiative = sheet.system.attributes.init;
     if (!initiative.ability) initiative.ability = "dex";
 
-    const ability = initiative.ability as keyof typeof sheet.system.abilities;
-    const value = sheet.system.abilities[ability].value;
+    const value = getAbility(sheet.system.abilities, initiative.ability).value;
     const bonus = Number(initiative.bonus) ?? 0;
 
-    return toModifier(value, bonus);
+    return toModifierDisplay(value, bonus);
+};
+
+export const getAbility = (abilities: Abilities, key: string) => {
+    const ability = key as keyof typeof abilities;
+    return abilities[ability];
 };
