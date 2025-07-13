@@ -3,7 +3,7 @@ import { getProficiencyBonus } from "@/helpers/dndHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
-import SheetSection from "./ProficienciesSection";
+import SheetSection from "./SheetSection";
 import SkillRow from "./SkillRow";
 import TraitChips from "./TraitProficiencyCode";
 import TextWithOptionalValueChip from "../TextWithOptionalValueChip";

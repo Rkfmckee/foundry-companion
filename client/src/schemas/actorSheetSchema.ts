@@ -81,6 +81,7 @@ const ItemSchema = z.object({
         properties: z.optional(z.array(z.string())),
         proficient: z.optional(z.nullable(z.number())),
         equipped: z.optional(z.boolean()),
+        attunement: z.optional(z.string()),
         attuned: z.optional(z.boolean()),
         magicalBonus: z.optional(z.nullable(z.number())),
         weight: z.optional(

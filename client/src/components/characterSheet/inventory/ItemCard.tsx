@@ -4,6 +4,7 @@ import { Avatar, AvatarGroup } from "@chakra-ui/react/avatar";
 import { Collapsible } from "@chakra-ui/react/collapsible";
 import { HStack } from "@chakra-ui/react/stack";
 import DOMPurify from "isomorphic-dompurify";
+import TextWithOptionalValueChip from "../TextWithOptionalValueChip";
 
 interface ItemCardProps {
     item: Item;
@@ -62,6 +63,9 @@ const ItemCard = ({ item }: ItemCardProps) => {
             </HStack>
             <Collapsible.Content>
                 <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.system.description.value) }} className={item.system.description.value && "mt-2"} />
+
+                <TextWithOptionalValueChip text="Attunement" value={item.system.attunement} hideIfNoValue />
+                <TextWithOptionalValueChip text="Range" values={[item.system.range?.value, item.system.range?.long]} units={item.system.range?.units} valuesSeparator="/" hideIfNoValue />
             </Collapsible.Content>
         </Collapsible.Root>
     );

@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
 
-interface ProficienciesSectionProps {
+interface SheetSectionProps {
     title: string;
     icon: string;
     children?: ReactNode;
 }
 
-const SheetSection = ({ title, icon, children }: ProficienciesSectionProps) => {
+const SheetSection = ({ title, icon, children }: SheetSectionProps) => {
     return (
         <div className="mb-3">
             <div className="bottom-border">

@@ -1,5 +1,5 @@
 import { Item } from "@/schemas/actorSheetSchema";
-import SheetSection from "../abilities/ProficienciesSection";
+import SheetSection from "../abilities/SheetSection";
 import ItemCard from "./ItemCard";
 
 interface InventorySectionProps {
