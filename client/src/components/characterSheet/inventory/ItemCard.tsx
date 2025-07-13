@@ -61,7 +61,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
                 )}
             </HStack>
             <Collapsible.Content>
-                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.system.description.value) }} />
+                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.system.description.value) }} className={item.system.description.value && "mt-2"} />
             </Collapsible.Content>
         </Collapsible.Root>
     );
