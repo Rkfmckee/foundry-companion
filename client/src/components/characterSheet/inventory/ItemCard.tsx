@@ -5,12 +5,16 @@ import { Collapsible } from "@chakra-ui/react/collapsible";
 import { HStack } from "@chakra-ui/react/stack";
 import DOMPurify from "isomorphic-dompurify";
 import TextWithOptionalValueChip from "../TextWithOptionalValueChip";
+import { fromAcronym } from "@/helpers/dndAcronyms";
+import { modifierDisplay } from "@/helpers/dndHelpers";
 
 interface ItemCardProps {
     item: Item;
 }
 
 const ItemCard = ({ item }: ItemCardProps) => {
+    const damage = item.system.damage;
+
     return (
         <Collapsible.Root className="bottom-border py-1">
             <HStack gap={3}>
@@ -64,8 +68,32 @@ const ItemCard = ({ item }: ItemCardProps) => {
             <Collapsible.Content>
                 <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.system.description.value) }} className={item.system.description.value && "mt-2"} />
 
-                <TextWithOptionalValueChip text="Attunement" value={item.system.attunement} hideIfNoValue />
-                <TextWithOptionalValueChip text="Range" values={[item.system.range?.value, item.system.range?.long]} units={item.system.range?.units} valuesSeparator="/" hideIfNoValue />
+                <div className="mt-2">
+                    <TextWithOptionalValueChip text={fromAcronym(item.system.type?.value)} />
+                    <TextWithOptionalValueChip text={fromAcronym(item.system.type?.value)} />
+
+                    <TextWithOptionalValueChip text="Range" values={[item.system.range?.value, item.system.range?.long]} valueDescriptors={[item.system.range?.units]} valuesSeparator="/" hideIfNoValue />
+                    <TextWithOptionalValueChip text="Damage" values={[damage?.base?.number ? `${damage.base.number}d${damage.base.denomination}` : ""]} valueDescriptors={damage?.base.types} hideIfNoValue />
+                    <TextWithOptionalValueChip
+                        text="Versatile Damage"
+                        values={[damage?.versatile?.number ? `${damage.versatile.number}d${damage.versatile.denomination}` : ""]}
+                        valueDescriptors={damage?.versatile?.types}
+                        hideIfNoValue
+                    />
+
+                    <TextWithOptionalValueChip text="Attunement" values={[item.system.attunement]} hideIfNoValue />
+                    <TextWithOptionalValueChip text={item.system.proficient && item.system.proficient > 0 ? "Proficient" : null} />
+                    <TextWithOptionalValueChip text="Magic bonus" values={[modifierDisplay(item.system.magicalBonus)]} />
+                </div>
+
+                {item.type == "weapon" && (
+                    <div className="mt-2">
+                        <p>Weapon properties:</p>
+                        {item.system.properties?.map((v, i) => (
+                            <TextWithOptionalValueChip key={i} text={fromAcronym(v)} />
+                        ))}
+                    </div>
+                )}
             </Collapsible.Content>
         </Collapsible.Root>
     );

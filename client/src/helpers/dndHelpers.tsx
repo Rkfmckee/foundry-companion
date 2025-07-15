@@ -28,7 +28,8 @@ export const getProficiencySymbol = (proficiencyLevel: number) => {
     }
 };
 
-export const modifierDisplay = (modifier: number) => {
+export const modifierDisplay = (modifier: number | undefined | null) => {
+    if (!modifier) return;
     return modifier > 0 ? `+${modifier}` : modifier.toString();
 };
 

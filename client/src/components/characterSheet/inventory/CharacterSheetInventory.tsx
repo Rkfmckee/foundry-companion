@@ -8,12 +8,13 @@ interface CharacterSheetAbilitiesProps {
 }
 
 const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
-    const weapons = sheet.items.filter((i) => i.type == "weapon");
-    const equipment = sheet.items.filter((i) => i.type == "equipment");
-    const consumables = sheet.items.filter((i) => i.type == "consumable");
-    const tools = sheet.items.filter((i) => i.type == "tool");
-    const loot = sheet.items.filter((i) => i.type == "loot");
-    const containers = sheet.items.filter((i) => i.type == "container");
+    const items = sheet.items.sort((i) => i.sort);
+    const weapons = items.filter((i) => i.type == "weapon");
+    const equipment = items.filter((i) => i.type == "equipment");
+    const consumables = items.filter((i) => i.type == "consumable");
+    const tools = items.filter((i) => i.type == "tool");
+    const loot = items.filter((i) => i.type == "loot");
+    const containers = items.filter((i) => i.type == "container");
 
     return (
         <Box className="character-sheet__panel">

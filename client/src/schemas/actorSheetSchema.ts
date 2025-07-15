@@ -105,7 +105,28 @@ const ItemSchema = z.object({
         ),
         type: z.optional(
             z.object({
-                value: z.enum(["simpleM", "simpleR", "martialM", "martialR", "natural", "improv", "siege", "class", ""]),
+                value: z.enum([
+                    "simpleM",
+                    "simpleR",
+                    "martialM",
+                    "martialR",
+                    "natural",
+                    "improv",
+                    "siege",
+                    "class",
+                    "light",
+                    "medium",
+                    "heavy",
+                    "shield",
+                    "clothing",
+                    "ring",
+                    "rod",
+                    "trinket",
+                    "vehicle",
+                    "wand",
+                    "wondrous",
+                    "",
+                ]),
             })
         ),
         damage: z.optional(
@@ -121,8 +142,8 @@ const ItemSchema = z.object({
         ),
         hp: z.optional(
             z.object({
-                value: z.number(),
-                max: z.number(),
+                value: z.nullable(z.number()),
+                max: z.nullable(z.number()),
             })
         ),
         activities: z.optional(

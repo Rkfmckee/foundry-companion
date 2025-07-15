@@ -58,20 +58,20 @@ const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
                 <div className="tabs__panel-column">
                     {(movement.walk || movement.fly || movement.swim || movement.climb || movement.burrow) && (
                         <SheetSection title="Movement" icon="person-running">
-                            <TextWithOptionalValueChip text="Walk" value={movement.walk} units={movement.units} hideIfNoValue />
-                            <TextWithOptionalValueChip text={"Fly" + (movement.hover ? " (hover)" : "")} value={movement.fly} units={movement.units} hideIfNoValue />
-                            <TextWithOptionalValueChip text="Swim" value={movement.swim} units={movement.units} hideIfNoValue />
-                            <TextWithOptionalValueChip text="Climb" value={movement.climb} units={movement.units} hideIfNoValue />
-                            <TextWithOptionalValueChip text="Burrow" value={movement.burrow} units={movement.units} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Walk" values={[movement.walk]} valueDescriptors={[movement.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text={"Fly" + (movement.hover ? " (hover)" : "")} values={[movement.fly]} valueDescriptors={[movement.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Swim" values={[movement.swim]} valueDescriptors={[movement.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Climb" values={[movement.climb]} valueDescriptors={[movement.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Burrow" values={[movement.burrow]} valueDescriptors={[movement.units]} hideIfNoValue />
                         </SheetSection>
                     )}
 
                     {(senses.darkvision || senses.blindsight || senses.tremorsense || senses.truesight) && (
                         <SheetSection title="Senses" icon="eye">
-                            <TextWithOptionalValueChip text="Darkvision" value={senses.darkvision} units={senses.units} hideIfNoValue />
-                            <TextWithOptionalValueChip text="Blindsight" value={senses.blindsight} units={senses.units} hideIfNoValue />
-                            <TextWithOptionalValueChip text="Tremorsense" value={senses.tremorsense} units={senses.units} hideIfNoValue />
-                            <TextWithOptionalValueChip text="Truesight" value={senses.truesight} units={senses.units} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Darkvision" values={[senses.darkvision]} valueDescriptors={[senses.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Blindsight" values={[senses.blindsight]} valueDescriptors={[senses.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Tremorsense" values={[senses.tremorsense]} valueDescriptors={[senses.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Truesight" values={[senses.truesight]} valueDescriptors={[senses.units]} hideIfNoValue />
                         </SheetSection>
                     )}
 
