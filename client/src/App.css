@@ -303,3 +303,8 @@ input {
     border-radius: 50%;
     z-index: 1;
 }
+
+.currency-input {
+    flex-grow: 1;
+    flex-basis: 0;
+}

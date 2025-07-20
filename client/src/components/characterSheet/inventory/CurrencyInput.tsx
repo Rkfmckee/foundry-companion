@@ -12,7 +12,7 @@ interface CurrencyInputProps {
 
 const CurrencyInput = ({ type, value, onChange }: CurrencyInputProps) => {
     return (
-        <HStack>
+        <HStack className="currency-input">
             <EditableNumber value={value} onChange={(value) => onChange(type, value)} width="100%" />
             {/* {type} */}
             <AvatarGroup size="2xs" shape="square">

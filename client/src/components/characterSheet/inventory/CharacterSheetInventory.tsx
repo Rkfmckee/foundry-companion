@@ -1,12 +1,8 @@
-import RStack from "@/components/RStack";
 import { ActorSheetData, CurrencyType } from "@/schemas/actorSheetSchema";
-import { Editable, HStack } from "@chakra-ui/react";
-import { Avatar, AvatarGroup } from "@chakra-ui/react/avatar";
+import { HStack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
-import { useEffect, useState } from "react";
-import InventorySection from "./InventorySection";
-import EditableNumber from "@/components/EditableNumber";
 import CurrencyInput from "./CurrencyInput";
+import InventorySection from "./InventorySection";
 
 interface CharacterSheetInventoryProps {
     sheet: ActorSheetData;
@@ -49,7 +45,13 @@ const CharacterSheetInventory = ({ sheet, setSheet }: CharacterSheetInventoryPro
 
     return (
         <Box className="character-sheet__panel">
-            <strong>Currency</strong>
+            <InventorySection title="Weapons" icon="utensils" items={weapons} />
+            <InventorySection title="Equipment" icon="shield" items={equipment} />
+            <InventorySection title="Consumables" icon="flask" items={consumables} />
+            <InventorySection title="Tools" icon="wrench" items={tools} />
+            <InventorySection title="Loot" icon="gem" items={loot} />
+            <InventorySection title="Containers" icon="suitcase" items={containers} />
+
             <HStack>
                 <CurrencyInput type="pp" value={sheet.system.currency.pp} onChange={currencyChanged} />
                 <CurrencyInput type="gp" value={sheet.system.currency.gp} onChange={currencyChanged} />
@@ -57,13 +59,6 @@ const CharacterSheetInventory = ({ sheet, setSheet }: CharacterSheetInventoryPro
                 <CurrencyInput type="sp" value={sheet.system.currency.sp} onChange={currencyChanged} />
                 <CurrencyInput type="cp" value={sheet.system.currency.cp} onChange={currencyChanged} />
             </HStack>
-
-            <InventorySection title="Weapons" icon="utensils" items={weapons} />
-            <InventorySection title="Equipment" icon="shield" items={equipment} />
-            <InventorySection title="Consumables" icon="flask" items={consumables} />
-            <InventorySection title="Tools" icon="wrench" items={tools} />
-            <InventorySection title="Loot" icon="gem" items={loot} />
-            <InventorySection title="Containers" icon="suitcase" items={containers} />
         </Box>
     );
 };
