@@ -1,4 +1,4 @@
-import { Abilities, ActorSheetData } from "@/schemas/actorSheetSchema";
+import { Abilities, Ability, ActorSheetData, Item } from "@/schemas/actorSheetSchema";
 
 export const getProficiencyBonus = (sheet: ActorSheetData) => {
     const characterLevel = getClasses(sheet)
@@ -56,11 +56,52 @@ export const getClasses = (sheet: ActorSheetData) => {
     return sheet.items.filter((i) => i.type == "class").sort((a, b) => ((a.system.levels ?? 0) > (b.system.levels ?? 0) ? -1 : 1));
 };
 
-export const getArmourClass = (sheet: ActorSheetData) => {
+export const getArmourClass = (sheet: ActorSheetData): { name: string; value: number } => {
     const ac = sheet.system.attributes.ac;
+    const dexMod = toModifier(sheet.system.abilities.dex.value);
+    const baseArmourClass = { name: "Base", value: 10 + toModifier(sheet.system.abilities.dex.value) };
 
-    if (["flat", "natural"].indexOf(ac.calc) != -1) return ac.flat;
-    else return 0;
+    switch (ac.calc) {
+        case "flat":
+        case "natural":
+            return { name: ac.calc, value: ac.flat ?? 0 };
+
+        case "mage":
+            return { name: "Mage Armour", value: 13 + dexMod };
+
+        case "draconic":
+            return { name: "Draconic Resilience", value: 13 + dexMod };
+
+        case "unarmoredMonk":
+            return { name: "Unarmoured Defense (Monk)", value: 10 + dexMod + toModifier(sheet.system.abilities.wis.value) };
+
+        case "unarmoredBarb":
+            return { name: "Unarmoured Defense (Barbarian)", value: 10 + dexMod + toModifier(sheet.system.abilities.con.value) };
+
+        case "unarmoredBard":
+            return { name: "Unarmoured Defense (Bard)", value: 10 + dexMod + toModifier(sheet.system.abilities.cha.value) };
+
+        case "default":
+            const armourItems = sheet.items.filter((i) => i.system.armor && i.system.equipped).map((i) => getArmourClassFromItem(i, sheet.system.abilities.dex));
+            const highestArmourItem = armourItems.filter((i) => i.name && i.value > 0).sort((a, b) => (a.value > b.value ? -1 : 1))[0];
+            return highestArmourItem ?? baseArmourClass;
+
+        default:
+            return baseArmourClass;
+    }
+};
+
+export const getArmourClassFromItem = (item: Item, dexterity: Ability | undefined): { name: string; value: number } => {
+    const dexMod = toModifier(dexterity?.value ?? 10);
+    const armour = item.system.armor;
+
+    if (!armour?.value) return { name: "", value: 0 };
+
+    const dexMax = armour.dex;
+    const dexBonus = dexMax && dexMod > dexMax ? dexMax : dexMod;
+    const magicBonus = armour.magicalBonus ?? 0;
+
+    return { name: item.name, value: armour.value + dexBonus + magicBonus };
 };
 
 export const getInitiativeBonus = (sheet: ActorSheetData) => {

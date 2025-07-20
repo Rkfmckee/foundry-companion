@@ -2,7 +2,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { ReactNode, useState } from "react";
 
 interface FcTooltipProps {
-    text: string;
+    text: string | undefined;
     children: ReactNode;
 }
 

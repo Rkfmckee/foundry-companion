@@ -1,18 +1,19 @@
 import FcTooltip from "@/components/FcTooltip";
-import { Item } from "@/schemas/actorSheetSchema";
+import { ActorSheetData, Item } from "@/schemas/actorSheetSchema";
 import { Avatar, AvatarGroup } from "@chakra-ui/react/avatar";
 import { Collapsible } from "@chakra-ui/react/collapsible";
 import { HStack } from "@chakra-ui/react/stack";
 import DOMPurify from "isomorphic-dompurify";
 import TextWithOptionalValueChip from "../TextWithOptionalValueChip";
 import { fromAcronym } from "@/helpers/dndAcronyms";
-import { modifierDisplay } from "@/helpers/dndHelpers";
+import { getArmourClassFromItem, modifierDisplay } from "@/helpers/dndHelpers";
 
 interface ItemCardProps {
     item: Item;
+    sheet?: ActorSheetData;
 }
 
-const ItemCard = ({ item }: ItemCardProps) => {
+const ItemCard = ({ item, sheet }: ItemCardProps) => {
     const damage = item.system.damage;
 
     return (
@@ -70,7 +71,8 @@ const ItemCard = ({ item }: ItemCardProps) => {
 
                 <div className="mt-2">
                     <TextWithOptionalValueChip text={fromAcronym(item.system.type?.value)} />
-                    <TextWithOptionalValueChip text={fromAcronym(item.system.type?.value)} />
+                    <TextWithOptionalValueChip text={fromAcronym(item.system.rarity)} />
+                    <TextWithOptionalValueChip text="AC" values={[getArmourClassFromItem(item, sheet?.system.abilities.dex).value]} hideIfNoValue />
 
                     <TextWithOptionalValueChip text="Range" values={[item.system.range?.value, item.system.range?.long]} valueDescriptors={[item.system.range?.units]} valuesSeparator="/" hideIfNoValue />
                     <TextWithOptionalValueChip text="Damage" values={[damage?.base?.number ? `${damage.base.number}d${damage.base.denomination}` : ""]} valueDescriptors={damage?.base.types} hideIfNoValue />

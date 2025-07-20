@@ -54,15 +54,15 @@ export const fromAcronym = (acronym: string | undefined) => {
         case "ver":
             return "Versatile";
 
-        // Armour
-        case "hvy":
-            return "Heavy";
+        // Armour (Light/Heavy handled in Weapon properties)
         case "med":
             return "Medium";
-        case "lgt":
-            return "Light";
         case "shl":
             return "Shields";
+
+        // Rarity
+        case "veryRare":
+            return "Very Rare";
 
         default:
             return toUpperCaseFirst(acronym);

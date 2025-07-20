@@ -10,6 +10,8 @@ import AbilitySeparator from "./AbilitySeparator";
 import HitPointBar from "./HitPointBar";
 import IconButtonWithLabel from "./IconButtonWithLabel";
 import ModifierWithLabel from "./ModifierWithLabel";
+import FcTooltip from "@/components/FcTooltip";
+import { toUpperCaseFirst } from "@/helpers/stringHelpers";
 
 interface CharacterSheetBasicDetailsProps {
     sheet: ActorSheetData;
@@ -22,8 +24,9 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
     const hitPoints = sheet.system.attributes.hp;
     const abilities = sheet.system.abilities;
 
-    const hitPointsPercentage = (hitPoints.value / hitPoints.max) * 100;
+    const hitPointsPercentage = hitPoints.max ? (hitPoints.value / hitPoints.max) * 100 : 0;
     const proficiencyBonus = getProficiencyBonus(sheet);
+    const armourClass = getArmourClass(sheet);
 
     const hitPointsChanged = (event: ChangeEvent<HTMLInputElement>, type: "hp" | "temp") => {
         let current = Number(event.target.value) ?? 0;
@@ -44,7 +47,7 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                 ...sheet.system,
                 attributes: {
                     ...sheet.system.attributes,
-                    hp: { ...sheet.system.attributes.hp, value: withinRange(hpValue, 0, hitPoints.max), temp: withinRange(tempValue, 0, hitPoints.max) },
+                    hp: { ...sheet.system.attributes.hp, value: withinRange(hpValue, 0, hitPoints.max ?? 0), temp: withinRange(tempValue, 0, hitPoints.max ?? 0) },
                 },
             },
         });
@@ -144,7 +147,9 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                                 }
                             />
                             <ModifierWithLabel modifier={modifierDisplay(getProficiencyBonus(sheet))} label="Proficiency" />
-                            <ModifierWithLabel modifier={getArmourClass(sheet).toString()} label="Armour Class" />
+                            <FcTooltip text={toUpperCaseFirst(armourClass.name)}>
+                                <ModifierWithLabel modifier={armourClass.value.toString()} label="Armour Class" />
+                            </FcTooltip>
                             <ModifierWithLabel modifier={getInitiativeBonus(sheet)} label="Initiative" />
                         </HStack>
                     </div>

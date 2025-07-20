@@ -76,6 +76,7 @@ const ItemSchema = z.object({
         description: z.object({
             value: z.string(),
         }),
+        rarity: z.optional(z.enum(["common", "uncommon", "rare", "veryRare", "legendary", "artifact", ""])),
         levels: z.optional(z.number()),
         quantity: z.optional(z.number()),
         properties: z.optional(z.array(z.string())),
@@ -138,6 +139,8 @@ const ItemSchema = z.object({
         armor: z.optional(
             z.object({
                 value: z.nullable(z.number()),
+                magicalBonus: z.optional(z.nullable(z.number())),
+                dex: z.optional(z.nullable(z.number())),
             })
         ),
         hp: z.optional(
@@ -196,7 +199,7 @@ export const ActorSheetDataSchema = z.object({
                 temp: z.nullable(z.number()),
             }),
             ac: z.object({
-                calc: z.string(),
+                calc: z.enum(["flat", "natural", "mage", "draconic", "unarmoredMonk", "unarmoredBarb", "unarmoredBard", "custom", "default"]),
                 flat: z.nullable(z.number()),
             }),
             init: z.object({
