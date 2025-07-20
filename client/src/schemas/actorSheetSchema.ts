@@ -167,6 +167,18 @@ const ItemSchema = z.object({
 });
 export type Item = z.infer<typeof ItemSchema>;
 
+const CurrencyTypeSchema = z.enum(["pp", "gp", "ep", "sp", "cp"]);
+export type CurrencyType = z.infer<typeof CurrencyTypeSchema>;
+
+export const CurrencySchema = z.object({
+    pp: z.number(),
+    gp: z.number(),
+    ep: z.number(),
+    sp: z.number(),
+    cp: z.number(),
+});
+export type Currency = z.infer<typeof CurrencySchema>;
+
 export const ActorSheetDataSchema = z.object({
     name: z.string(),
     img: z.string(),
@@ -261,6 +273,7 @@ export const ActorSheetDataSchema = z.object({
             weaponProf: TraitSchema,
             armorProf: TraitSchema,
         }),
+        currency: CurrencySchema,
         favorites: z.array(
             z.object({
                 type: z.string(),

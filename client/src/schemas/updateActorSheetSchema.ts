@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ActorSheetData } from "./actorSheetSchema";
+import { ActorSheetData, CurrencySchema } from "./actorSheetSchema";
 
 export const UpdateActorSheetDataSchema = z.object({
     name: z.string(),
@@ -9,6 +9,7 @@ export const UpdateActorSheetDataSchema = z.object({
                 value: z.number(),
             }),
         }),
+        currency: CurrencySchema,
     }),
 });
 export type UpdateActorSheetData = z.infer<typeof UpdateActorSheetDataSchema>;
