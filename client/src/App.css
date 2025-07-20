@@ -129,7 +129,8 @@ input[type="number"] {
 
 input {
     height: 2em;
-    border: 0.2em solid grey;
+    border: 0;
+    /* border: 0 0.2em solid grey; */
     border-radius: 0.25em;
 }
 

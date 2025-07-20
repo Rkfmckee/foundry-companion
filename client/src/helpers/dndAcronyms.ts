@@ -64,6 +64,18 @@ export const fromAcronym = (acronym: string | undefined) => {
         case "veryRare":
             return "Very Rare";
 
+        // Currency
+        case "pp":
+            return "Platinum";
+        case "gp":
+            return "Gold";
+        case "ep":
+            return "Electrum";
+        case "sp":
+            return "Silver";
+        case "cp":
+            return "Copper";
+
         default:
             return toUpperCaseFirst(acronym);
     }

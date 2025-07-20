@@ -3,8 +3,10 @@ import { ActorSheetData, CurrencyType } from "@/schemas/actorSheetSchema";
 import { Editable, HStack } from "@chakra-ui/react";
 import { Avatar, AvatarGroup } from "@chakra-ui/react/avatar";
 import { Box } from "@chakra-ui/react/box";
-import InventorySection from "./InventorySection";
 import { useEffect, useState } from "react";
+import InventorySection from "./InventorySection";
+import EditableNumber from "@/components/EditableNumber";
+import CurrencyInput from "./CurrencyInput";
 
 interface CharacterSheetInventoryProps {
     sheet: ActorSheetData;
@@ -12,8 +14,6 @@ interface CharacterSheetInventoryProps {
 }
 
 const CharacterSheetInventory = ({ sheet, setSheet }: CharacterSheetInventoryProps) => {
-    const [value, setValue] = useState("");
-
     const items = sheet.items.sort((i) => i.sort);
     const weapons = items.filter((i) => i.type == "weapon");
     const equipment = items.filter((i) => i.type == "equipment");
@@ -22,21 +22,14 @@ const CharacterSheetInventory = ({ sheet, setSheet }: CharacterSheetInventoryPro
     const loot = items.filter((i) => i.type == "loot");
     const containers = items.filter((i) => i.type == "container");
 
-    useEffect(() => {
-        currencyChanged("cp", value);
-        setValue("");
-    }, [value]);
+    const currencyChanged = (type: CurrencyType, value: number) => {
+        const valueValid = value >= 0;
 
-    const currencyChanged = (type: CurrencyType, value: string) => {
-        if (!value) return;
-        const valueNum = Number(value);
-        const valueValid = valueNum >= 0;
-
-        const pp = type == "pp" && valueValid ? valueNum : sheet.system.currency.pp;
-        const gp = type == "gp" && valueValid ? valueNum : sheet.system.currency.gp;
-        const ep = type == "ep" && valueValid ? valueNum : sheet.system.currency.ep;
-        const sp = type == "sp" && valueValid ? valueNum : sheet.system.currency.sp;
-        const cp = type == "cp" && valueValid ? valueNum : sheet.system.currency.cp;
+        const pp = type == "pp" && valueValid ? value : sheet.system.currency.pp;
+        const gp = type == "gp" && valueValid ? value : sheet.system.currency.gp;
+        const ep = type == "ep" && valueValid ? value : sheet.system.currency.ep;
+        const sp = type == "sp" && valueValid ? value : sheet.system.currency.sp;
+        const cp = type == "cp" && valueValid ? value : sheet.system.currency.cp;
 
         setSheet({
             ...sheet,
@@ -57,19 +50,13 @@ const CharacterSheetInventory = ({ sheet, setSheet }: CharacterSheetInventoryPro
     return (
         <Box className="character-sheet__panel">
             <strong>Currency</strong>
-            <RStack>
-                <HStack>
-                    <Editable.Root>
-                        <Editable.Preview>{sheet.system.currency.cp}</Editable.Preview>
-                        <Editable.Input value={value} onChange={(event) => setValue(event.target.value)} />
-                    </Editable.Root>
-                    <AvatarGroup size="2xs" shape="square">
-                        <Avatar.Root>
-                            <Avatar.Image src={`${import.meta.env.VITE_FVTT_URL}/systems/dnd5e/icons/currency/gold.webp`} />
-                        </Avatar.Root>
-                    </AvatarGroup>
-                </HStack>
-            </RStack>
+            <HStack>
+                <CurrencyInput type="pp" value={sheet.system.currency.pp} onChange={currencyChanged} />
+                <CurrencyInput type="gp" value={sheet.system.currency.gp} onChange={currencyChanged} />
+                <CurrencyInput type="ep" value={sheet.system.currency.ep} onChange={currencyChanged} />
+                <CurrencyInput type="sp" value={sheet.system.currency.sp} onChange={currencyChanged} />
+                <CurrencyInput type="cp" value={sheet.system.currency.cp} onChange={currencyChanged} />
+            </HStack>
 
             <InventorySection title="Weapons" icon="utensils" items={weapons} />
             <InventorySection title="Equipment" icon="shield" items={equipment} />
