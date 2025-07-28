@@ -224,6 +224,16 @@ input {
     margin: 0 0.5em;
 }
 
+.currency-icon {
+    width: 1.5em;
+    height: 1.5em;
+
+    @media (max-width: 600px) {
+        width: 1em;
+        height: 1em;
+    }
+}
+
 /* Miscellaneous styles */
 
 .modifier-with-label {

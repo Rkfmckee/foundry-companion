@@ -15,8 +15,8 @@ const CurrencyInput = ({ type, value, onChange }: CurrencyInputProps) => {
         <HStack className="currency-input">
             <EditableNumber value={value} onChange={(value) => onChange(type, value)} width="100%" />
             {/* {type} */}
-            <AvatarGroup size="2xs" shape="square">
-                <Avatar.Root>
+            <AvatarGroup shape="square">
+                <Avatar.Root className="currency-icon">
                     <Avatar.Image src={`${import.meta.env.VITE_FVTT_URL}/systems/dnd5e/icons/currency/${fromAcronym(type)?.toLowerCase()}.webp`} />
                 </Avatar.Root>
             </AvatarGroup>
