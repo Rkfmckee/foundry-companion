@@ -62,6 +62,7 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
     ) : characterSheet ? (
         <>
             <CharacterSheetBasicDetails sheet={characterSheet} setSheet={setCharacterSheet} />
+
             <RStack className="character-sheet__tabs">
                 <Collapsible.Root className="favourites__panel" open={favouritesOpen} unmountOnExit lazyMount>
                     <Collapsible.Content>

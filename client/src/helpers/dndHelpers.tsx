@@ -29,7 +29,7 @@ export const getProficiencySymbol = (proficiencyLevel: number) => {
 };
 
 export const modifierDisplay = (modifier: number | undefined | null) => {
-    if (!modifier) return;
+    if (modifier == undefined || modifier == null) return;
     return modifier > 0 ? `+${modifier}` : modifier.toString();
 };
 
