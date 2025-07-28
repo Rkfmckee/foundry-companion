@@ -1,5 +1,5 @@
 interface ModifierWithLabelProps {
-    modifier: string;
+    modifier: string | undefined;
     label: string;
 }
 

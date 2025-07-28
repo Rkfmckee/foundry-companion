@@ -3,10 +3,10 @@ import { getProficiencyBonus } from "@/helpers/dndHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
-import TraitProficiencyCode from "./TraitProficiencyCode";
-import OptionalProficiencyCode from "./OptionalProficiencyCode";
-import ProficienciesSection from "./ProficienciesSection";
+import SheetSection from "./SheetSection";
 import SkillRow from "./SkillRow";
+import TraitChips from "./TraitProficiencyCode";
+import TextWithOptionalValueChip from "../TextWithOptionalValueChip";
 
 interface CharacterSheetAbilitiesProps {
     sheet: ActorSheetData;
@@ -56,48 +56,66 @@ const CharacterSheetAbilities = ({ sheet }: CharacterSheetAbilitiesProps) => {
                     <SkillRow skill={sheet.system.skills.sur} name="Survival" abilities={sheet.system.abilities} proficiencyBonus={getProficiencyBonus(sheet)} />
                 </Grid>
                 <div className="tabs__panel-column">
-                    <ProficienciesSection title="Movement" icon="person-running">
-                        <OptionalProficiencyCode title="Walk" value={movement.walk} units={movement.units} />
-                        <OptionalProficiencyCode title="Fly" value={movement.fly} units={movement.units} hover={movement.hover} />
-                        <OptionalProficiencyCode title="Swim" value={movement.swim} units={movement.units} />
-                        <OptionalProficiencyCode title="Climb" value={movement.climb} units={movement.units} />
-                        <OptionalProficiencyCode title="Burrow" value={movement.burrow} units={movement.units} />
-                    </ProficienciesSection>
+                    {(movement.walk || movement.fly || movement.swim || movement.climb || movement.burrow) && (
+                        <SheetSection title="Movement" icon="person-running">
+                            <TextWithOptionalValueChip text="Walk" values={[movement.walk]} valueDescriptors={[movement.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text={"Fly" + (movement.hover ? " (hover)" : "")} values={[movement.fly]} valueDescriptors={[movement.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Swim" values={[movement.swim]} valueDescriptors={[movement.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Climb" values={[movement.climb]} valueDescriptors={[movement.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Burrow" values={[movement.burrow]} valueDescriptors={[movement.units]} hideIfNoValue />
+                        </SheetSection>
+                    )}
 
-                    <ProficienciesSection title="Senses" icon="eye">
-                        <OptionalProficiencyCode title="Darkvision" value={senses.darkvision} units={senses.units} />
-                        <OptionalProficiencyCode title="Blindsight" value={senses.blindsight} units={senses.units} />
-                        <OptionalProficiencyCode title="Tremorsense" value={senses.tremorsense} units={senses.units} />
-                        <OptionalProficiencyCode title="Truesight" value={senses.truesight} units={senses.units} />
-                    </ProficienciesSection>
+                    {(senses.darkvision || senses.blindsight || senses.tremorsense || senses.truesight) && (
+                        <SheetSection title="Senses" icon="eye">
+                            <TextWithOptionalValueChip text="Darkvision" values={[senses.darkvision]} valueDescriptors={[senses.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Blindsight" values={[senses.blindsight]} valueDescriptors={[senses.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Tremorsense" values={[senses.tremorsense]} valueDescriptors={[senses.units]} hideIfNoValue />
+                            <TextWithOptionalValueChip text="Truesight" values={[senses.truesight]} valueDescriptors={[senses.units]} hideIfNoValue />
+                        </SheetSection>
+                    )}
 
-                    <ProficienciesSection title="Languages" icon="comment">
-                        <TraitProficiencyCode data={sheet.system.traits.languages} />
-                    </ProficienciesSection>
+                    {(sheet.system.traits.languages.value.length > 0 || sheet.system.traits.languages.custom) && (
+                        <SheetSection title="Languages" icon="comment">
+                            <TraitChips data={sheet.system.traits.languages} />
+                        </SheetSection>
+                    )}
 
-                    <ProficienciesSection title="Condition immunities" icon="shield-heart">
-                        <TraitProficiencyCode data={sheet.system.traits.ci} />
-                    </ProficienciesSection>
+                    {(sheet.system.traits.ci.value.length > 0 || sheet.system.traits.ci.custom) && (
+                        <SheetSection title="Condition immunities" icon="shield-heart">
+                            <TraitChips data={sheet.system.traits.ci} />
+                        </SheetSection>
+                    )}
 
-                    <ProficienciesSection title="Damage immunities" icon="heart">
-                        <TraitProficiencyCode data={sheet.system.traits.di} />
-                    </ProficienciesSection>
+                    {(sheet.system.traits.di.value.length > 0 || sheet.system.traits.di.custom) && (
+                        <SheetSection title="Damage immunities" icon="heart">
+                            <TraitChips data={sheet.system.traits.di} />
+                        </SheetSection>
+                    )}
 
-                    <ProficienciesSection title="Damage resistances" icon="heart-pulse">
-                        <TraitProficiencyCode data={sheet.system.traits.dr} />
-                    </ProficienciesSection>
+                    {(sheet.system.traits.dr.value.length > 0 || sheet.system.traits.dr.custom) && (
+                        <SheetSection title="Damage resistances" icon="heart-pulse">
+                            <TraitChips data={sheet.system.traits.dr} />
+                        </SheetSection>
+                    )}
 
-                    <ProficienciesSection title="Damage vulnerabilities" icon="heart-crack">
-                        <TraitProficiencyCode data={sheet.system.traits.dv} />
-                    </ProficienciesSection>
+                    {(sheet.system.traits.dv.value.length > 0 || sheet.system.traits.dv.custom) && (
+                        <SheetSection title="Damage vulnerabilities" icon="heart-crack">
+                            <TraitChips data={sheet.system.traits.dv} />
+                        </SheetSection>
+                    )}
 
-                    <ProficienciesSection title="Weapon proficiencies" icon="utensils">
-                        <TraitProficiencyCode data={sheet.system.traits.weaponProf} />
-                    </ProficienciesSection>
+                    {(sheet.system.traits.weaponProf.value.length > 0 || sheet.system.traits.weaponProf.custom) && (
+                        <SheetSection title="Weapon proficiencies" icon="utensils">
+                            <TraitChips data={sheet.system.traits.weaponProf} />
+                        </SheetSection>
+                    )}
 
-                    <ProficienciesSection title="Armour proficiencies" icon="shield">
-                        <TraitProficiencyCode data={sheet.system.traits.armorProf} />
-                    </ProficienciesSection>
+                    {(sheet.system.traits.armorProf.value.length > 0 || sheet.system.traits.armorProf.custom) && (
+                        <SheetSection title="Armour proficiencies" icon="shield">
+                            <TraitChips data={sheet.system.traits.armorProf} />
+                        </SheetSection>
+                    )}
                 </div>
             </RStack>
         </Box>

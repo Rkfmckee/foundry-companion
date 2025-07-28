@@ -23,8 +23,9 @@ const AbilitiesSchema = z.object({
 });
 export type Abilities = z.infer<typeof AbilitiesSchema>;
 
+const SkillAbilitySchema = z.enum(["str", "dex", "con", "int", "wis", "cha"]);
 const SkillSchema = z.object({
-    ability: z.enum(["str", "dex", "con", "int", "wis", "cha"]),
+    ability: SkillAbilitySchema,
     value: z.number(),
     bonuses: z.object({
         check: z.string(),
@@ -48,6 +49,135 @@ const DamageBypassesSchema = z.array(z.enum(["ada", "mgc", "sil"]));
 const DamageTraitSchema = TraitSchema.extend({
     bypasses: DamageBypassesSchema,
 });
+
+export const InventoryItemTypes = ["weapon", "consumable", "container", "equipment", "loot", "tool"] as const;
+const InventoryItemTypeSchema = z.enum(InventoryItemTypes);
+export type InventoryItemType = z.infer<typeof InventoryItemTypeSchema>;
+
+const ItemDamageSchema = z.object({
+    number: z.nullable(z.number()),
+    denomination: z.nullable(z.number()),
+    bonus: z.optional(z.string()),
+    types: z.array(z.string()),
+    custom: z.object({
+        enabled: z.boolean(),
+        formula: z.optional(z.string()),
+    }),
+});
+export type ItemDamage = z.infer<typeof ItemDamageSchema>;
+
+const ItemSchema = z.object({
+    _id: z.string(),
+    sort: z.number(),
+    name: z.string(),
+    type: InventoryItemTypeSchema.or(z.enum(["class", "feat", "spell"])),
+    img: z.string(),
+    system: z.object({
+        description: z.object({
+            value: z.string(),
+        }),
+        rarity: z.optional(z.enum(["common", "uncommon", "rare", "veryRare", "legendary", "artifact", ""])),
+        levels: z.optional(z.number()),
+        quantity: z.optional(z.number()),
+        properties: z.optional(z.array(z.string())),
+        proficient: z.optional(z.nullable(z.number())),
+        equipped: z.optional(z.boolean()),
+        attunement: z.optional(z.string()),
+        attuned: z.optional(z.boolean()),
+        magicalBonus: z.optional(z.nullable(z.number())),
+        weight: z.optional(
+            z.object({
+                value: z.number(),
+                units: z.string(),
+            })
+        ),
+        range: z.optional(
+            z.object({
+                value: z.nullable(z.number().or(z.string())),
+                long: z.optional(z.nullable(z.number())),
+                units: z.string(),
+            })
+        ),
+        uses: z.optional(
+            z.object({
+                max: z.string(),
+                spent: z.number(),
+            })
+        ),
+        type: z.optional(
+            z.object({
+                value: z.enum([
+                    "simpleM",
+                    "simpleR",
+                    "martialM",
+                    "martialR",
+                    "natural",
+                    "improv",
+                    "siege",
+                    "class",
+                    "light",
+                    "medium",
+                    "heavy",
+                    "shield",
+                    "clothing",
+                    "ring",
+                    "rod",
+                    "trinket",
+                    "vehicle",
+                    "wand",
+                    "wondrous",
+                    "",
+                ]),
+            })
+        ),
+        damage: z.optional(
+            z.object({
+                base: ItemDamageSchema,
+                versatile: z.optional(ItemDamageSchema),
+            })
+        ),
+        armor: z.optional(
+            z.object({
+                value: z.nullable(z.number()),
+                magicalBonus: z.optional(z.nullable(z.number())),
+                dex: z.optional(z.nullable(z.number())),
+            })
+        ),
+        hp: z.optional(
+            z.object({
+                value: z.nullable(z.number()),
+                max: z.nullable(z.number()),
+            })
+        ),
+        activities: z.optional(
+            z.object({
+                attack: z.optional(
+                    z.object({
+                        ability: SkillAbilitySchema.or(z.enum(["none", "spellcasting", ""])),
+                        bonus: z.string(),
+                        flat: z.boolean(),
+                        type: z.object({
+                            value: z.string(),
+                        }),
+                    })
+                ),
+            })
+        ),
+    }),
+});
+export type Item = z.infer<typeof ItemSchema>;
+
+const CurrencyTypeSchema = z.enum(["pp", "gp", "ep", "sp", "cp"]);
+export type CurrencyType = z.infer<typeof CurrencyTypeSchema>;
+
+export const CurrencySchema = z.object({
+    pp: z.number(),
+    gp: z.number(),
+    ep: z.number(),
+    sp: z.number(),
+    cp: z.number(),
+});
+export type Currency = z.infer<typeof CurrencySchema>;
 
 export const ActorSheetDataSchema = z.object({
     name: z.string(),
@@ -77,12 +207,12 @@ export const ActorSheetDataSchema = z.object({
         attributes: z.object({
             hp: z.object({
                 value: z.number(),
-                max: z.number(),
+                max: z.nullable(z.number()),
                 temp: z.nullable(z.number()),
             }),
             ac: z.object({
-                calc: z.string(),
-                flat: z.number(),
+                calc: z.enum(["flat", "natural", "mage", "draconic", "unarmoredMonk", "unarmoredBarb", "unarmoredBard", "custom", "default"]),
+                flat: z.nullable(z.number()),
             }),
             init: z.object({
                 ability: z.string(),
@@ -94,7 +224,7 @@ export const ActorSheetDataSchema = z.object({
                 fly: z.nullable(z.number()),
                 swim: z.nullable(z.number()),
                 walk: z.nullable(z.number()),
-                units: z.string(),
+                units: z.nullable(z.string()),
                 hover: z.boolean(),
             }),
             senses: z.object({
@@ -102,7 +232,7 @@ export const ActorSheetDataSchema = z.object({
                 blindsight: z.nullable(z.number()),
                 tremorsense: z.nullable(z.number()),
                 truesight: z.nullable(z.number()),
-                units: z.string(),
+                units: z.nullable(z.string()),
                 special: z.string(),
             }),
             inspiration: z.boolean(),
@@ -114,33 +244,36 @@ export const ActorSheetDataSchema = z.object({
             dv: DamageTraitSchema,
             dm: z.object({
                 amount: z.object({
-                    acid: z.string(),
-                    bludgeoning: z.string(),
-                    cold: z.string(),
-                    fire: z.string(),
-                    force: z.string(),
-                    lightning: z.string(),
-                    necrotic: z.string(),
-                    piercing: z.string(),
-                    poison: z.string(),
-                    psychic: z.string(),
-                    radiant: z.string(),
-                    slashing: z.string(),
-                    thunder: z.string(),
+                    acid: z.optional(z.string()),
+                    bludgeoning: z.optional(z.string()),
+                    cold: z.optional(z.string()),
+                    fire: z.optional(z.string()),
+                    force: z.optional(z.string()),
+                    lightning: z.optional(z.string()),
+                    necrotic: z.optional(z.string()),
+                    piercing: z.optional(z.string()),
+                    poison: z.optional(z.string()),
+                    psychic: z.optional(z.string()),
+                    radiant: z.optional(z.string()),
+                    slashing: z.optional(z.string()),
+                    thunder: z.optional(z.string()),
                 }),
                 bypasses: DamageBypassesSchema,
             }),
             languages: TraitSchema.extend({
                 communication: z.object({
-                    telepathy: z.object({
-                        value: z.number(),
-                        units: z.string(),
-                    }),
+                    telepathy: z.optional(
+                        z.object({
+                            value: z.number(),
+                            units: z.string(),
+                        })
+                    ),
                 }),
             }),
             weaponProf: TraitSchema,
             armorProf: TraitSchema,
         }),
+        currency: CurrencySchema,
         favorites: z.array(
             z.object({
                 type: z.string(),
@@ -149,16 +282,7 @@ export const ActorSheetDataSchema = z.object({
             })
         ),
     }),
-    items: z.array(
-        z.object({
-            _id: z.string(),
-            name: z.string(),
-            type: z.enum(["class", "feat", "spell", "weapon"]),
-            system: z.object({
-                levels: z.optional(z.number()),
-            }),
-        })
-    ),
+    items: z.array(ItemSchema),
 });
 export type ActorSheetData = z.infer<typeof ActorSheetDataSchema>;
 

@@ -1,15 +1,15 @@
 import { ReactNode } from "react";
 
-interface ProficienciesSectionProps {
+interface SheetSectionProps {
     title: string;
     icon: string;
     children?: ReactNode;
 }
 
-const ProficienciesSection = ({ title, icon, children }: ProficienciesSectionProps) => {
+const SheetSection = ({ title, icon, children }: SheetSectionProps) => {
     return (
         <div className="mb-3">
-            <div className="proficiency-title">
+            <div className="bottom-border">
                 <i className={`fa-solid fa-${icon}`} />
                 <strong className="mx-2">{title}</strong>
             </div>
@@ -18,4 +18,4 @@ const ProficienciesSection = ({ title, icon, children }: ProficienciesSectionPro
     );
 };
 
-export default ProficienciesSection;
+export default SheetSection;

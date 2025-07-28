@@ -14,11 +14,11 @@ const SkillRow = ({ skill, name, abilities, proficiencyBonus }: SkillRowProps) =
 
     return (
         <>
-            <GridItem className="skill-item text-center">{getProficiencySymbol(skill.value)}</GridItem>
-            <GridItem className="skill-item text-uppercase text-center">{skill.ability}</GridItem>
-            <GridItem className="skill-item">{name}</GridItem>
-            <GridItem className="skill-item text-center">{toModifierWithProficiencyDisplay(ability.value, proficiencyBonus, skill.value)}</GridItem>
-            <GridItem className="skill-item text-center">{10 + toModifierWithProficiency(ability.value, proficiencyBonus, skill.value)}</GridItem>
+            <GridItem className="bottom-border text-center">{getProficiencySymbol(skill.value)}</GridItem>
+            <GridItem className="bottom-border text-uppercase text-center">{skill.ability}</GridItem>
+            <GridItem className="bottom-border">{name}</GridItem>
+            <GridItem className="bottom-border text-center">{toModifierWithProficiencyDisplay(ability.value, proficiencyBonus, skill.value)}</GridItem>
+            <GridItem className="bottom-border text-center">{10 + toModifierWithProficiency(ability.value, proficiencyBonus, skill.value)}</GridItem>
         </>
     );
 };

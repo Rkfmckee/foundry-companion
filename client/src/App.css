@@ -15,6 +15,12 @@ html.dark {
     --colour-panel: var(--chakra-colors-bg-panel);
 }
 
+/* Colours */
+
+.colour-muted {
+    color: var(--chakra-colors-fg-muted);
+}
+
 /* Override bootstrap/base styles */
 
 #root h4,
@@ -88,6 +94,7 @@ input[type="number"] {
 .crop-text {
     white-space: nowrap;
     overflow: hidden;
+    min-width: 0;
 }
 
 .where-is-this {
@@ -98,8 +105,9 @@ input[type="number"] {
 
 .character-sheet__panel {
     background-color: var(--colour-panel);
-    padding: 1em;
     border-radius: var(--chakra-radii-lg);
+    padding: 1em;
+    max-width: 95vw;
 }
 
 /* Basic details */
@@ -119,11 +127,10 @@ input[type="number"] {
     }
 }
 
-.hitpoint-bar,
-.hitpoint-temp,
-.hitpoint-modify {
+input {
     height: 2em;
-    border: 0.2em solid grey;
+    border: 0;
+    /* border: 0 0.2em solid grey; */
     border-radius: 0.25em;
 }
 
@@ -187,12 +194,15 @@ input[type="number"] {
     flex-grow: 1;
 }
 
+.tabs__list {
+    flex-wrap: wrap;
+}
+
 .tabs__panel-column {
     flex: 1 1 0px;
 }
 
 .skill-item {
-    border-bottom: 1px var(--chakra-colors-border) solid;
     padding: 0.25em 0.75em;
 }
 
@@ -200,12 +210,11 @@ input[type="number"] {
     padding: 0 0.75em;
 }
 
-.proficiency-title {
+.sheet-section-title {
     border-bottom: 1px var(--chakra-colors-border) solid;
 }
 
 .proficiency-text {
-    margin-top: 0.5em;
     margin-right: 0.5em;
     color: var(--bs-body-color);
 }
@@ -213,6 +222,16 @@ input[type="number"] {
 .proficiency-separator {
     color: var(--chakra-colors-border);
     margin: 0 0.5em;
+}
+
+.currency-icon {
+    width: 1.5em;
+    height: 1.5em;
+
+    @media (max-width: 600px) {
+        width: 1em;
+        height: 1em;
+    }
 }
 
 /* Miscellaneous styles */
@@ -234,6 +253,15 @@ input[type="number"] {
     i {
         margin-right: 0.25em;
     }
+}
+
+.bottom-border {
+    border-bottom: 1px var(--chakra-colors-border) solid;
+}
+
+.fit-content-center {
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .ability-group {
@@ -284,4 +312,9 @@ input[type="number"] {
     outline: 2px solid var(--bs-body-color);
     border-radius: 50%;
     z-index: 1;
+}
+
+.currency-input {
+    flex-grow: 1;
+    flex-basis: 0;
 }

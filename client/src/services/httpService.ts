@@ -15,5 +15,5 @@ export const put = async <T>(url: string, data: any, schema?: z.Schema<T>) => {
 const parseData = <T>(data: any, schema: z.Schema<T>) => {
     var result = schema.safeParse(data);
     if (result.success) return result.data;
-    else return undefined;
+    else return result.error;
 };

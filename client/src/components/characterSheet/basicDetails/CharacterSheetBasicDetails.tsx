@@ -1,7 +1,8 @@
+import RStack from "@/components/RStack";
 import { getArmourClass, getClasses, getInitiativeBonus, getProficiencyBonus, modifierDisplay } from "@/helpers/dndHelpers";
 import { withinRange } from "@/helpers/numberHelpers";
 import { ActorSheetData } from "@/schemas/actorSheetSchema";
-import { Avatar, AvatarGroup, HStack, IconButton, Stack } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, HStack, IconButton } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
 import { ChangeEvent, useState } from "react";
 import AbilityScoreBox from "./AbilityScoreBox";
@@ -9,7 +10,8 @@ import AbilitySeparator from "./AbilitySeparator";
 import HitPointBar from "./HitPointBar";
 import IconButtonWithLabel from "./IconButtonWithLabel";
 import ModifierWithLabel from "./ModifierWithLabel";
-import RStack from "@/components/RStack";
+import FcTooltip from "@/components/FcTooltip";
+import { toUpperCaseFirst } from "@/helpers/stringHelpers";
 
 interface CharacterSheetBasicDetailsProps {
     sheet: ActorSheetData;
@@ -22,8 +24,9 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
     const hitPoints = sheet.system.attributes.hp;
     const abilities = sheet.system.abilities;
 
-    const hitPointsPercentage = (hitPoints.value / hitPoints.max) * 100;
+    const hitPointsPercentage = hitPoints.max ? (hitPoints.value / hitPoints.max) * 100 : 0;
     const proficiencyBonus = getProficiencyBonus(sheet);
+    const armourClass = getArmourClass(sheet);
 
     const hitPointsChanged = (event: ChangeEvent<HTMLInputElement>, type: "hp" | "temp") => {
         let current = Number(event.target.value) ?? 0;
@@ -44,7 +47,7 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                 ...sheet.system,
                 attributes: {
                     ...sheet.system.attributes,
-                    hp: { ...sheet.system.attributes.hp, value: withinRange(hpValue, 0, hitPoints.max), temp: withinRange(tempValue, 0, hitPoints.max) },
+                    hp: { ...sheet.system.attributes.hp, value: withinRange(hpValue, 0, hitPoints.max ?? 0), temp: withinRange(tempValue, 0, hitPoints.max ?? 0) },
                 },
             },
         });
@@ -144,7 +147,9 @@ const CharacterSheetBasicDetails = ({ sheet, setSheet }: CharacterSheetBasicDeta
                                 }
                             />
                             <ModifierWithLabel modifier={modifierDisplay(getProficiencyBonus(sheet))} label="Proficiency" />
-                            <ModifierWithLabel modifier={getArmourClass(sheet).toString()} label="Armour Class" />
+                            <FcTooltip text={toUpperCaseFirst(armourClass.name)}>
+                                <ModifierWithLabel modifier={armourClass.value.toString()} label="Armour Class" />
+                            </FcTooltip>
                             <ModifierWithLabel modifier={getInitiativeBonus(sheet)} label="Initiative" />
                         </HStack>
                     </div>
