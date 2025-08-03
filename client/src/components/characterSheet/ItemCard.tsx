@@ -1,12 +1,12 @@
 import FcTooltip from "@/components/FcTooltip";
+import { fromAcronym } from "@/helpers/dndAcronyms";
+import { getArmourClassFromItem, modifierDisplay } from "@/helpers/dndHelpers";
 import { ActorSheetData, Item } from "@/schemas/actorSheetSchema";
 import { Avatar, AvatarGroup } from "@chakra-ui/react/avatar";
 import { Collapsible } from "@chakra-ui/react/collapsible";
 import { HStack } from "@chakra-ui/react/stack";
 import DOMPurify from "isomorphic-dompurify";
-import TextWithOptionalValueChip from "../TextWithOptionalValueChip";
-import { fromAcronym } from "@/helpers/dndAcronyms";
-import { getArmourClassFromItem, modifierDisplay } from "@/helpers/dndHelpers";
+import TextWithOptionalValueChip from "./TextWithOptionalValueChip";
 
 interface ItemCardProps {
     item: Item;

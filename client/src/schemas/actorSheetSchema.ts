@@ -77,6 +77,7 @@ const ItemSchema = z.object({
             value: z.string(),
         }),
         rarity: z.optional(z.enum(["common", "uncommon", "rare", "veryRare", "legendary", "artifact", ""])),
+        requirements: z.optional(z.string()),
         levels: z.optional(z.number()),
         quantity: z.optional(z.number()),
         properties: z.optional(z.array(z.string())),

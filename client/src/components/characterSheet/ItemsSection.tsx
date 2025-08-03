@@ -1,14 +1,14 @@
 import { Item } from "@/schemas/actorSheetSchema";
-import SheetSection from "../abilities/SheetSection";
+import SheetSection from "./abilities/SheetSection";
 import ItemCard from "./ItemCard";
 
-interface InventorySectionProps {
+interface ItemsSectionProps {
     title: string;
     icon: string;
     items: Item[];
 }
 
-const InventorySection = ({ title, icon, items }: InventorySectionProps) => {
+const ItemsSectionSection = ({ title, icon, items }: ItemsSectionProps) => {
     return (
         <>
             {items.length > 0 && (
@@ -22,4 +22,4 @@ const InventorySection = ({ title, icon, items }: InventorySectionProps) => {
     );
 };
 
-export default InventorySection;
+export default ItemsSectionSection;

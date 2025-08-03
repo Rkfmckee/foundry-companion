@@ -2,7 +2,7 @@ import { ActorSheetData, CurrencyType } from "@/schemas/actorSheetSchema";
 import { HStack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react/box";
 import CurrencyInput from "./CurrencyInput";
-import InventorySection from "./InventorySection";
+import ItemsSectionSection from "../ItemsSection";
 
 interface CharacterSheetInventoryProps {
     sheet: ActorSheetData;
@@ -45,12 +45,12 @@ const CharacterSheetInventory = ({ sheet, setSheet }: CharacterSheetInventoryPro
 
     return (
         <Box className="character-sheet__panel">
-            <InventorySection title="Weapons" icon="utensils" items={weapons} />
-            <InventorySection title="Equipment" icon="shield" items={equipment} />
-            <InventorySection title="Consumables" icon="flask" items={consumables} />
-            <InventorySection title="Tools" icon="wrench" items={tools} />
-            <InventorySection title="Loot" icon="gem" items={loot} />
-            <InventorySection title="Containers" icon="suitcase" items={containers} />
+            <ItemsSectionSection title="Weapons" icon="utensils" items={weapons} />
+            <ItemsSectionSection title="Equipment" icon="shield" items={equipment} />
+            <ItemsSectionSection title="Consumables" icon="flask" items={consumables} />
+            <ItemsSectionSection title="Tools" icon="wrench" items={tools} />
+            <ItemsSectionSection title="Loot" icon="gem" items={loot} />
+            <ItemsSectionSection title="Containers" icon="suitcase" items={containers} />
 
             <HStack>
                 <CurrencyInput type="pp" value={sheet.system.currency.pp} onChange={currencyChanged} />

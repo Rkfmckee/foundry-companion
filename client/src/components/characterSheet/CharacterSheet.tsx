@@ -13,6 +13,7 @@ import ZodErrors from "../ZodErrors";
 import CharacterSheetAbilities from "./abilities/CharacterSheetAbilities";
 import CharacterSheetBasicDetails from "./basicDetails/CharacterSheetBasicDetails";
 import CharacterSheetInventory from "./inventory/CharacterSheetInventory";
+import CharacterSheetFeatures from "./features/CharacterSheetFeatures";
 
 interface CharacterSheetProps {
     uuid: string;
@@ -87,7 +88,7 @@ const CharacterSheet = ({ uuid }: CharacterSheetProps) => {
                         <CharacterSheetInventory sheet={characterSheet} setSheet={setCharacterSheet} />
                     </Tabs.Content>
                     <Tabs.Content value="features">
-                        <Box className="character-sheet__panel">Features content</Box>
+                        <CharacterSheetFeatures sheet={characterSheet} />
                     </Tabs.Content>
                     <Tabs.Content value="spells">
                         <Box className="character-sheet__panel">Spells content</Box>
