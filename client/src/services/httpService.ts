@@ -3,6 +3,8 @@ import { z } from "zod";
 
 export const get = async <T>(url: string, schema: z.Schema<T>) => {
     var response = await fvttApiClient.get(url, requestConfig);
+    if (response.status >= 400) console.error(`${response.status}: ${response.data.error}`);
+
     return parseData(response.data, schema);
 };
 
